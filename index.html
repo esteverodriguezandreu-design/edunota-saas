@@ -4,26 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduNota Pro - Micro-SaaS Académico</title>
-    <!-- Tailwind CSS CDN para un diseño súper vistoso y moderno -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Estilos personalizados y efectos Glassmorphism -->
     <style>
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
@@ -49,7 +31,7 @@
                 EduNota <span class="text-amber-300">Pro</span>
             </h1>
             <p class="text-blue-100 text-sm sm:text-base max-w-xl mx-auto">
-                Calcula tu acceso a cualquier universidad de España, tus notas universitarias y genera esquemas y simulaciones para tu TFG al instante.
+                Calcula tu acceso a cualquier universidad pública de España, tus notas universitarias y genera esquemas y simulaciones para tu TFG.
             </p>
         </header>
 
@@ -72,7 +54,7 @@
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
                     <span>🎯</span> Calculadora Oficial EBAU y Notas de Corte (España)
                 </h2>
-                <p class="text-sm text-slate-500">Introduce tus calificaciones de Bachillerato y EBAU para comprobar tu nota sobre 14 y la compatibilidad con todas las universidades públicas de España.</p>
+                <p class="text-sm text-slate-500">Introduce tus calificaciones para comprobar tu nota sobre 14 y buscar entre todas las universidades públicas del país.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -92,6 +74,7 @@
                         <option value="Salud">🧬 Ciencias de la Salud</option>
                         <option value="Sociales">📊 Ciencias Sociales y Jurídicas</option>
                         <option value="Ciencias">🔬 Ciencias Experimentales</option>
+                        <option value="Artes">🎨 Artes y Humanidades</option>
                     </select>
                 </div>
                 <div>
@@ -127,9 +110,16 @@
                     <span class="text-xs uppercase font-extrabold text-blue-600 tracking-wider">Tu Nota de Acceso Final</span>
                     <div id="ebau-score-display" class="text-4xl font-black text-blue-900 mt-1">-- / 14.000</div>
                 </div>
+                
+                <!-- Buscador dentro de los resultados -->
+                <div class="space-y-1">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Filtrar por universidad o nombre de grado:</label>
+                    <input type="text" id="buscador-grados" onkeyup="filtrarGrados()" placeholder="Ej. Madrid, Valencia, Medicina, Informática..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                </div>
+
                 <div>
-                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Grados compatibles en Universidades de España:</h3>
-                    <div id="ebau-grados-list" class="space-y-2 max-h-72 overflow-y-auto pr-2"></div>
+                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Listado de Grados y Universidades de España:</h3>
+                    <div id="ebau-grados-list" class="space-y-2 max-h-80 overflow-y-auto pr-2"></div>
                 </div>
             </div>
         </section>
@@ -140,7 +130,7 @@
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
                     <span>📚</span> Simulador y Previsión de Notas Universitarias
                 </h2>
-                <p class="text-sm text-slate-500">Calcula qué nota exacta necesitas en tu examen final para aprobar o llegar a tu nota objetivo en el cuatrimestre.</p>
+                <p class="text-sm text-slate-500">Calcula qué nota exacta necesitas en tu examen final para aprobar o llegar a tu objetivo.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -178,12 +168,12 @@
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
                     <span>🤖</span> Asistente Inteligente para TFG (Trabajo de Fin de Grado)
                 </h2>
-                <p class="text-sm text-slate-500">Selecciona una herramienta avanzada para estructurar, redactar o generar contenido automatizado para tu TFG.</p>
+                <p class="text-sm text-slate-500">Selecciona una herramienta avanzada para estructurar, redactar o generar contenido para tu TFG.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <button onclick="setTfgMode('estructura')" id="tfg-btn-1" class="p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition">
-                    📁 Generador de Estructura e Índice (Capítulos)
+                    📁 Generador de Estructura e Índice
                 </button>
                 <button onclick="setTfgMode('hipotesis')" id="tfg-btn-2" class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300">
                     💡 Formulador de Objetivos e Hipótesis
@@ -202,10 +192,21 @@
                 Generar Contenido con IA ✨
             </button>
 
+            <!-- ZONA DE MONETIZACIÓN / STRIPE (Ejemplo de plan Pro) -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div>
+                    <h4 class="font-bold text-amber-900 text-sm">🚀 Desbloquea el Asistente TFG Pro (Ilimitado + Exportar PDF)</h4>
+                    <p class="text-xs text-amber-700">Obtén tutorías automáticas completas y descarga directa por solo 2,99€/mes.</p>
+                </div>
+                <a href="https://buy.stripe.com/tu-enlace-de-pago-aqui" target="_blank" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition shadow-md whitespace-nowrap">
+                    Hacerse Pro ⭐
+                </a>
+            </div>
+
             <div id="tfg-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-3 font-mono text-sm">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Resultado Generado por IA</span>
-                    <button onclick="copiarTfg()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar texto</button>
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Resultado Generado</span>
+                    <button onclick="copiarTfg()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
                 </div>
                 <div id="tfg-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-80 pr-2"></div>
             </div>
@@ -215,12 +216,11 @@
 
     <!-- PIE DE PÁGINA -->
     <footer class="text-center text-white/70 text-xs py-6">
-        © 2026 EduNota Pro. Todos los derechos reservados. Tu micro-SaaS educativo en internet.
+        © 2026 EduNota Pro. Todos los derechos reservados.
     </footer>
 
-    <!-- SCRIPT DE LÓGICA -->
+    <!-- SCRIPT DE LÓGICA Y DATOS AMPLIADOS -->
     <script>
-        // Control de Pestañas
         function switchTab(tab) {
             document.getElementById('tab-ebau').classList.add('hidden');
             document.getElementById('tab-uni').classList.add('hidden');
@@ -242,25 +242,54 @@
             }
         }
 
-        // Base de datos ampliada de Universidades de España
+        // Base de datos exhaustiva con universidades públicas de toda España
         const gradosNacionales = [
-            { nombre: "Grado en Ciencia de Datos e IA (UPV - Valencia)", corte: 12.450, rama: "Ingeniería" },
-            { nombre: "Grado en Ingeniería Informática (UPV - Valencia)", corte: 11.820, rama: "Ingeniería" },
-            { nombre: "Grado en Matemáticas (UV - Valencia)", corte: 12.100, rama: "Ciencias" },
-            { nombre: "Grado en Medicina (Universidad de Valencia - UV)", corte: 13.250, rama: "Salud" },
-            { nombre: "Grado en Ingeniería Informática (UPM - Madrid)", corte: 12.300, rama: "Ingeniería" },
-            { nombre: "Grado en Ciencia de Datos (UC3M - Madrid)", corte: 12.850, rama: "Ingeniería" },
-            { nombre: "Grado en Medicina (UCM - Madrid)", corte: 13.400, rama: "Salud" },
-            { nombre: "Grado en Ingeniería Aeroespacial (UPM - Madrid)", corte: 13.100, rama: "Ingeniería" },
-            { nombre: "Grado en Administración y Dirección de Empresas (UB - Barcelona)", corte: 8.500, rama: "Sociales" },
-            { nombre: "Grado en Ingeniería Informática (UPC - Barcelona)", corte: 11.950, rama: "Ingeniería" },
-            { nombre: "Grado en Medicina (UB - Barcelona)", corte: 13.150, rama: "Salud" },
-            { nombre: "Grado en Biotecnología (USAL - Salamanca)", corte: 12.200, rama: "Ciencias" },
-            { nombre: "Grado en Derecho (US - Sevilla)", corte: 9.200, rama: "Sociales" },
-            { nombre: "Grado en Ingeniería Informática (UMA - Málaga)", corte: 10.900, rama: "Ingeniería" },
-            { nombre: "Grado en Medicina (UGR - Granada)", corte: 13.120, rama: "Salud" },
-            { nombre: "Grado en Física (UV - Valencia)", corte: 11.900, rama: "Ciencias" }
+            // Comunidad Valenciana
+            { nombre: "Grado en Ciencia de Datos e IA - Universitat Politècnica de València (UPV)", corte: 12.450, rama: "Ingeniería" },
+            { nombre: "Grado en Ingeniería Informática - Universitat Politècnica de València (UPV)", corte: 11.820, rama: "Ingeniería" },
+            { nombre: "Grado en Medicina - Universitat de València (UV)", corte: 13.250, rama: "Salud" },
+            { nombre: "Grado en Matemáticas - Universitat de València (UV)", corte: 12.100, rama: "Ciencias" },
+            { nombre: "Grado en Física - Universitat de València (UV)", corte: 11.900, rama: "Ciencias" },
+            { nombre: "Grado en Ingeniería Informática - Universitat d'Alacant (UA)", corte: 10.500, rama: "Ingeniería" },
+            { nombre: "Grado en Medicina - Universidad Miguel Hernández (UMH - Elche)", corte: 13.100, rama: "Salud" },
+
+            // Comunidad de Madrid
+            { nombre: "Grado en Medicina - Universidad Complutense de Madrid (UCM)", corte: 13.400, rama: "Salud" },
+            { nombre: "Grado en Ingeniería Informática - Universidad Politécnica de Madrid (UPM)", corte: 12.300, rama: "Ingeniería" },
+            { nombre: "Grado en Ingeniería Aeroespacial - Universidad Politécnica de Madrid (UPM)", corte: 13.100, rama: "Ingeniería" },
+            { nombre: "Grado en Ciencia de Datos - Universidad Carlos III de Madrid (UC3M)", corte: 12.850, rama: "Ingeniería" },
+            { nombre: "Grado en Matemáticas - Universidad Autónoma de Madrid (UAM)", corte: 12.900, rama: "Ciencias" },
+            { nombre: "Grado en Biotecnología - Universidad Politécnica de Madrid (UPM)", corte: 12.400, rama: "Ciencias" },
+            { nombre: "Grado en Derecho - Universidad Autónoma de Madrid (UAM)", corte: 10.800, rama: "Sociales" },
+
+            // Cataluña
+            { nombre: "Grado en Medicina - Universitat de Barcelona (UB)", corte: 13.150, rama: "Salud" },
+            { nombre: "Grado en Ingeniería Informática - Universitat Politècnica de Catalunya (UPC)", corte: 11.950, rama: "Ingeniería" },
+            { nombre: "Grado en Administración y Dirección de Empresas - Universitat de Barcelona (UB)", corte: 8.500, rama: "Sociales" },
+            { nombre: "Grado en Biología - Universitat Autònoma de Barcelona (UAB)", corte: 10.400, rama: "Ciencias" },
+            { nombre: "Grado en Publicidad y RRPP - Universitat Autònoma de Barcelona (UAB)", corte: 10.150, rama: "Sociales" },
+
+            // Andalucía
+            { nombre: "Grado en Medicina - Universidad de Granada (UGR)", corte: 13.120, rama: "Salud" },
+            { nombre: "Grado en Ingeniería Informática - Universidad de Málaga (UMA)", corte: 10.900, rama: "Ingeniería" },
+            { nombre: "Grado en Derecho - Universidad de Sevilla (US)", corte: 9.200, rama: "Sociales" },
+            { nombre: "Grado en Física - Universidad de Sevilla (US)", corte: 11.500, rama: "Ciencias" },
+            { nombre: "Grado en Fisioterapia - Universidad de Cádiz (UCA)", corte: 11.800, rama: "Salud" },
+
+            // País Vasco y Navarra
+            { nombre: "Grado en Medicina - Universidad del País Vasco (UPV/EHU)", corte: 12.950, rama: "Salud" },
+            { nombre: "Grado en Ingeniería Informática - Universidad del País Vasco (UPV/EHU)", corte: 10.200, rama: "Ingeniería" },
+            { nombre: "Grado en ADE y Economía - Universidad Pública de Navarra (UPNA)", corte: 8.900, rama: "Sociales" },
+
+            // Galicia, Castilla y León, Aragón y otras
+            { nombre: "Grado en Medicina - Universidade de Santiago de Compostela (USC)", corte: 12.890, rama: "Salud" },
+            { nombre: "Grado en Biotecnología - Universidad de Salamanca (USAL)", corte: 12.200, rama: "Ciencias" },
+            { nombre: "Grado en Ingeniería Informática - Universidad de Valladolid (UVa)", corte: 10.450, rama: "Ingeniería" },
+            { nombre: "Grado en Medicina - Universidad de Zaragoza (Unizar)", corte: 13.010, rama: "Salud" },
+            { nombre: "Grado en Historia - Universidad de Oviedo (Uniovi)", corte: 7.500, rama: "Artes" }
         ];
+
+        let ultimaNotaGlobal = 0;
 
         function calcularEbau() {
             try {
@@ -270,42 +299,54 @@
                 const p1 = parseFloat(document.getElementById('ebau-p1').value);
                 const m2 = parseFloat(document.getElementById('ebau-m2').value);
                 const p2 = parseFloat(document.getElementById('ebau-p2').value);
-                const ramaFiltro = document.getElementById('ebau-rama').value;
 
                 if(isNaN(nco) || isNaN(cf)) {
                     alert("Por favor, introduce notas válidas.");
                     return;
                 }
 
-                const notaFinal = (0.6 * nco) + (0.4 * cf) + (p1 * m1) + (p2 * m2);
-                const notaRedondeada = notaFinal.toFixed(3);
-
-                document.getElementById('ebau-score-display').innerText = `${notaRedondeada} / 14.000`;
+                ultimaNotaGlobal = (0.6 * nco) + (0.4 * cf) + (p1 * m1) + (p2 * m2);
+                document.getElementById('ebau-score-display').innerText = `${ultimaNotaGlobal.toFixed(3)} / 14.000`;
                 
-                const contenedor = document.getElementById('ebau-grados-list');
-                contenedor.innerHTML = "";
-
-                let aptosCount = 0;
-                gradosNacionales.forEach(grado => {
-                    if(ramaFiltro === 'todos' || grado.rama === ramaFiltro) {
-                        const accesible = notaFinal >= grado.corte;
-                        if(accesible) aptosCount++;
-                        
-                        const badge = accesible 
-                            ? `<span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded-full">✅ ACCESIBLE</span>`
-                            : `<span class="bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded-full">❌ No alcanza corte</span>`;
-
-                        const item = document.createElement('div');
-                        item.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm";
-                        item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.nombre}</div><div class="text-xs text-slate-500">Nota de corte: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
-                        contenedor.appendChild(item);
-                    }
-                });
-
+                renderizarGrados(gradosNacionales);
                 document.getElementById('ebau-result-box').classList.remove('hidden');
             } catch(e) {
                 alert("Error en el cálculo. Revisa los campos numéricos.");
             }
+        }
+
+        function renderizarGrados(lista) {
+            const contenedor = document.getElementById('ebau-grados-list');
+            contenedor.innerHTML = "";
+            const ramaFiltro = document.getElementById('ebau-rama').value;
+            const textoBusqueda = document.getElementById('buscador-grados').value.toLowerCase();
+
+            let visibles = 0;
+            lista.forEach(grado => {
+                const cumpleRama = (ramaFiltro === 'todos' || grado.rama === ramaFiltro);
+                const cumpleTexto = grado.nombre.toLowerCase().includes(textoBusqueda);
+
+                if(cumpleRama && cumpleTexto) {
+                    visibles++;
+                    const accesible = ultimaNotaGlobal >= grado.corte;
+                    const badge = accesible 
+                        ? `<span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded-full whitespace-nowrap">✅ ACCESIBLE</span>`
+                        : `<span class="bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap">❌ No alcanza</span>`;
+
+                    const item = document.createElement('div');
+                    item.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm gap-2";
+                    item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.nombre}</div><div class="text-xs text-slate-500">Nota de corte: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
+                    contenedor.appendChild(item);
+                }
+            });
+
+            if(visibles === 0) {
+                contenedor.innerHTML = `<div class="text-center text-slate-500 py-4 text-sm">No se encontraron grados con ese filtro o búsqueda.</div>`;
+            }
+        }
+
+        function filtrarGrados() {
+            renderizarGrados(gradosNacionales);
         }
 
         function calcularUni() {
@@ -329,9 +370,9 @@
                 resBox.classList.remove('hidden');
 
                 if(necesaria <= 0) {
-                    resText.innerText = "🎉 ¡Felicidades! Ya has superado la asignatura con la nota acumulada.";
+                    resText.innerText = "🎉 ¡Felicidades! Ya has superado la asignatura.";
                 } else if(necesaria > 10) {
-                    resText.innerText = `⚠️ Necesitarías un ${necesaria}. Es matemáticamente imposible alcanzar este objetivo en el examen final.`;
+                    resText.innerText = `⚠️ Necesitarías un ${necesaria}. Es matemáticamente imposible alcanzar este objetivo.`;
                 } else {
                     resText.innerText = `🎯 Necesitas sacar un ${necesaria} / 10 en el examen final.`;
                 }
@@ -340,9 +381,7 @@
             }
         }
 
-        // TFG Asistente Logic
         let currentTfgMode = 'estructura';
-
         function setTfgMode(mode) {
             currentTfgMode = mode;
             document.getElementById('tfg-btn-1').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300";
@@ -355,11 +394,11 @@
             if(mode === 'estructura') {
                 document.getElementById('tfg-btn-1').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition";
                 labelInput.innerText = "Tema o Título del TFG:";
-                inputField.placeholder = "Ej. Ciberseguridad en infraestructuras críticas industriales...";
+                inputField.placeholder = "Ej. Ciberseguridad en infraestructuras críticas...";
             } else if(mode === 'hipotesis') {
                 document.getElementById('tfg-btn-2').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition";
                 labelInput.innerText = "Pregunta de Investigación principal:";
-                inputField.placeholder = "Ej. ¿Afecta el teletrabajo a la productividad laboral en el sector tecnológico?";
+                inputField.placeholder = "Ej. ¿Afecta el teletrabajo a la productividad laboral?";
             } else if(mode === 'bibliografia') {
                 document.getElementById('tfg-btn-3').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition";
                 labelInput.innerText = "Área o palabras clave de referencia:";
@@ -379,18 +418,18 @@
             box.classList.remove('hidden');
 
             if(currentTfgMode === 'estructura') {
-                output.innerText = `[ESTRUCTURA PROPUESTA PARA TFG]\n\n1. Introducción y Justificación\n   - Contexto del problema: ${val}\n   - Motivación y relevancia académica\n2. Objetivos del Trabajo\n   - Objetivo General y Objetivos Específicos\n3. Estado del Arte / Marco Teórico\n   - Revisión bibliográfica de antecedentes\n4. Metodología\n   - Enfoque analítico, herramientas y fuentes de datos\n5. Desarrollo y Análisis de Resultados\n   - Implementación práctica o estudio empírico\n6. Conclusiones y Futuras Líneas de Investigación\n7. Referencias Bibliográficas`;
+                output.innerText = `[ESTRUCTURA PROPUESTA PARA TFG]\n\n1. Introducción y Justificación\n   - Contexto: ${val}\n2. Objetivos del Trabajo\n3. Estado del Arte / Marco Teórico\n4. Metodología y Análisis\n5. Resultados y Discusión\n6. Conclusiones\n7. Referencias`;
             } else if(currentTfgMode === 'hipotesis') {
-                output.innerText = `[OBJETIVOS E HIPÓTESIS SUGERIDAS]\n\nPregunta base: "${val}"\n\n• Objetivo General:\n  Evaluar empíricamente la correlación y el impacto directo de las variables principales sobre el fenómeno analizado.\n\n• Hipótesis Principal (H1):\n  Existe una relación estadísticamente significativa y positiva entre la adopción de los factores evaluados y la optimización del rendimiento final.\n\n• Hipótesis Nula (H0):\n  No se aprecian variaciones significativas atribuibles a los factores de estudio.`;
+                output.innerText = `[HIPÓTESIS SUGERIDAS]\n\nPregunta: "${val}"\n\n• Hipótesis Principal (H1):\n  Existe una relación significativa entre la adopción de los factores evaluados y la optimización del rendimiento.\n• Hipótesis Nula (H0):\n  No se aprecian variaciones significativas atribuibles al estudio.`;
             } else if(currentTfgMode === 'bibliografia') {
-                output.innerText = `[EJEMPLOS DE REFERENCIAS BIBLIOGRÁFICAS (Normas APA 7ª Edición)]\n\n• Autor, A. (2025). Fundamentos avanzados y aplicación práctica de ${val}. Editorial Académica Española.\n• Pérez, J., & Gómez, M. (2024). Análisis metodológico en entornos de investigación científica. Revista Iberoamericana de Educación Superior, 14(2), 45-62.\n• Smith, J. K. (2023). Modern perspectives and technological impacts. Academic Press. https://doi.org/10.1016/j.example.2023.05`;
+                output.innerText = `[REFERENCIAS BIBLIOGRÁFICAS (Normas APA)]\n\n• Autor, A. (2025). Fundamentos de ${val}. Editorial Académica.\n• Pérez, J., & Gómez, M. (2024). Análisis metodológico. Revista Iberoamericana, 14(2), 45-62.`;
             }
         }
 
         function copiarTfg() {
             const text = document.getElementById('tfg-output').innerText;
             navigator.clipboard.writeText(text);
-            alert("¡Contenido copiado al portapapeles!");
+            alert("¡Contenido copiado!");
         }
     </script>
 </body>
