@@ -150,4 +150,248 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Porcentaje ya evaluado (%)</label>
-                    <input type="number" id="uni-peso-actual" step="1" min="0" max="100" value="4
+                    <input type="number" id="uni-peso-actual" step="1" min="0" max="100" value="40" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nota mínima deseada en el acta</label>
+                    <input type="number" id="uni-objetivo" step="0.1" min="0" max="10" value="5.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Peso o porcentaje del examen final (%)</label>
+                    <input type="number" id="uni-peso-final" step="1" min="0" max="100" value="60" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+            </div>
+
+            <button onclick="calcularUni()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
+                Calcular Nota Requerida en el Final 📊
+            </button>
+
+            <div id="uni-result-box" class="hidden bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-6 text-center space-y-2">
+                <span class="text-xs uppercase font-extrabold text-emerald-700 tracking-wider">Resultado del Cálculo</span>
+                <div id="uni-result-text" class="text-xl sm:text-2xl font-black text-emerald-900">--</div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: ASISTENTE TFG & GENERADOR IA -->
+        <section id="tab-tfg" class="hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
+            <div class="border-b pb-4">
+                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
+                    <span>🤖</span> Asistente Inteligente para TFG (Trabajo de Fin de Grado)
+                </h2>
+                <p class="text-sm text-slate-500">Selecciona una herramienta avanzada para estructurar, redactar o generar contenido automatizado para tu TFG.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button onclick="setTfgMode('estructura')" id="tfg-btn-1" class="p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition">
+                    📁 Generador de Estructura e Índice (Capítulos)
+                </button>
+                <button onclick="setTfgMode('hipotesis')" id="tfg-btn-2" class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300">
+                    💡 Formulador de Objetivos e Hipótesis
+                </button>
+                <button onclick="setTfgMode('bibliografia')" id="tfg-btn-3" class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300">
+                    📚 Generador de Referencias APA / IEEE
+                </button>
+            </div>
+
+            <div class="space-y-2">
+                <label id="tfg-label-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600">Tema o Título del TFG:</label>
+                <input type="text" id="tfg-input" placeholder="Ej. Aplicación de Inteligencia Artificial en la predicción de mercados financieros..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+
+            <button onclick="generarTfg()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
+                Generar Contenido con IA ✨
+            </button>
+
+            <div id="tfg-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-3 font-mono text-sm">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Resultado Generado por IA</span>
+                    <button onclick="copiarTfg()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar texto</button>
+                </div>
+                <div id="tfg-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-80 pr-2"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="text-center text-white/70 text-xs py-6">
+        © 2026 EduNota Pro. Todos los derechos reservados. Tu micro-SaaS educativo en internet.
+    </footer>
+
+    <!-- SCRIPT DE LÓGICA -->
+    <script>
+        // Control de Pestañas
+        function switchTab(tab) {
+            document.getElementById('tab-ebau').classList.add('hidden');
+            document.getElementById('tab-uni').classList.add('hidden');
+            document.getElementById('tab-tfg').classList.add('hidden');
+
+            document.getElementById('btn-ebau').className = "flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 text-white hover:bg-white/10";
+            document.getElementById('btn-uni').className = "flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 text-white hover:bg-white/10";
+            document.getElementById('btn-tfg').className = "flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 text-white hover:bg-white/10";
+
+            if(tab === 'ebau') {
+                document.getElementById('tab-ebau').classList.remove('hidden');
+                document.getElementById('btn-ebau').className = "flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 bg-white text-blue-900 shadow-md";
+            } else if(tab === 'uni') {
+                document.getElementById('tab-uni').classList.remove('hidden');
+                document.getElementById('btn-uni').className = "flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 bg-white text-blue-900 shadow-md";
+            } else if(tab === 'tfg') {
+                document.getElementById('tab-tfg').classList.remove('hidden');
+                document.getElementById('btn-tfg').className = "flex-1 min-w-[130px] py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300 bg-white text-blue-900 shadow-md";
+            }
+        }
+
+        // Base de datos ampliada de Universidades de España
+        const gradosNacionales = [
+            { nombre: "Grado en Ciencia de Datos e IA (UPV - Valencia)", corte: 12.450, rama: "Ingeniería" },
+            { nombre: "Grado en Ingeniería Informática (UPV - Valencia)", corte: 11.820, rama: "Ingeniería" },
+            { nombre: "Grado en Matemáticas (UV - Valencia)", corte: 12.100, rama: "Ciencias" },
+            { nombre: "Grado en Medicina (Universidad de Valencia - UV)", corte: 13.250, rama: "Salud" },
+            { nombre: "Grado en Ingeniería Informática (UPM - Madrid)", corte: 12.300, rama: "Ingeniería" },
+            { nombre: "Grado en Ciencia de Datos (UC3M - Madrid)", corte: 12.850, rama: "Ingeniería" },
+            { nombre: "Grado en Medicina (UCM - Madrid)", corte: 13.400, rama: "Salud" },
+            { nombre: "Grado en Ingeniería Aeroespacial (UPM - Madrid)", corte: 13.100, rama: "Ingeniería" },
+            { nombre: "Grado en Administración y Dirección de Empresas (UB - Barcelona)", corte: 8.500, rama: "Sociales" },
+            { nombre: "Grado en Ingeniería Informática (UPC - Barcelona)", corte: 11.950, rama: "Ingeniería" },
+            { nombre: "Grado en Medicina (UB - Barcelona)", corte: 13.150, rama: "Salud" },
+            { nombre: "Grado en Biotecnología (USAL - Salamanca)", corte: 12.200, rama: "Ciencias" },
+            { nombre: "Grado en Derecho (US - Sevilla)", corte: 9.200, rama: "Sociales" },
+            { nombre: "Grado en Ingeniería Informática (UMA - Málaga)", corte: 10.900, rama: "Ingeniería" },
+            { nombre: "Grado en Medicina (UGR - Granada)", corte: 13.120, rama: "Salud" },
+            { nombre: "Grado en Física (UV - Valencia)", corte: 11.900, rama: "Ciencias" }
+        ];
+
+        function calcularEbau() {
+            try {
+                const nco = parseFloat(document.getElementById('ebau-nco').value);
+                const cf = parseFloat(document.getElementById('ebau-cf').value);
+                const m1 = parseFloat(document.getElementById('ebau-m1').value);
+                const p1 = parseFloat(document.getElementById('ebau-p1').value);
+                const m2 = parseFloat(document.getElementById('ebau-m2').value);
+                const p2 = parseFloat(document.getElementById('ebau-p2').value);
+                const ramaFiltro = document.getElementById('ebau-rama').value;
+
+                if(isNaN(nco) || isNaN(cf)) {
+                    alert("Por favor, introduce notas válidas.");
+                    return;
+                }
+
+                const notaFinal = (0.6 * nco) + (0.4 * cf) + (p1 * m1) + (p2 * m2);
+                const notaRedondeada = notaFinal.toFixed(3);
+
+                document.getElementById('ebau-score-display').innerText = `${notaRedondeada} / 14.000`;
+                
+                const contenedor = document.getElementById('ebau-grados-list');
+                contenedor.innerHTML = "";
+
+                let aptosCount = 0;
+                gradosNacionales.forEach(grado => {
+                    if(ramaFiltro === 'todos' || grado.rama === ramaFiltro) {
+                        const accesible = notaFinal >= grado.corte;
+                        if(accesible) aptosCount++;
+                        
+                        const badge = accesible 
+                            ? `<span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded-full">✅ ACCESIBLE</span>`
+                            : `<span class="bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded-full">❌ No alcanza corte</span>`;
+
+                        const item = document.createElement('div');
+                        item.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm";
+                        item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.nombre}</div><div class="text-xs text-slate-500">Nota de corte: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
+                        contenedor.appendChild(item);
+                    }
+                });
+
+                document.getElementById('ebau-result-box').classList.remove('hidden');
+            } catch(e) {
+                alert("Error en el cálculo. Revisa los campos numéricos.");
+            }
+        }
+
+        function calcularUni() {
+            try {
+                const actual = parseFloat(document.getElementById('uni-actual').value);
+                const pesoActual = parseFloat(document.getElementById('uni-peso-actual').value) / 100.0;
+                const objetivo = parseFloat(document.getElementById('uni-objetivo').value);
+                const pesoFinal = parseFloat(document.getElementById('uni-peso-final').value) / 100.0;
+
+                if(pesoFinal <= 0) {
+                    alert("El peso del examen final debe ser mayor que 0%.");
+                    return;
+                }
+
+                const puntosTenidos = actual * pesoActual;
+                const puntosFaltantes = objetivo - puntosTenidos;
+                const necesaria = (puntosFaltantes / pesoFinal).toFixed(2);
+
+                const resBox = document.getElementById('uni-result-box');
+                const resText = document.getElementById('uni-result-text');
+                resBox.classList.remove('hidden');
+
+                if(necesaria <= 0) {
+                    resText.innerText = "🎉 ¡Felicidades! Ya has superado la asignatura con la nota acumulada.";
+                } else if(necesaria > 10) {
+                    resText.innerText = `⚠️ Necesitarías un ${necesaria}. Es matemáticamente imposible alcanzar este objetivo en el examen final.`;
+                } else {
+                    resText.innerText = `🎯 Necesitas sacar un ${necesaria} / 10 en el examen final.`;
+                }
+            } catch(e) {
+                alert("Introduce valores numéricos válidos.");
+            }
+        }
+
+        // TFG Asistente Logic
+        let currentTfgMode = 'estructura';
+
+        function setTfgMode(mode) {
+            currentTfgMode = mode;
+            document.getElementById('tfg-btn-1').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300";
+            document.getElementById('tfg-btn-2').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300";
+            document.getElementById('tfg-btn-3').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300";
+
+            const labelInput = document.getElementById('tfg-label-input');
+            const inputField = document.getElementById('tfg-input');
+
+            if(mode === 'estructura') {
+                document.getElementById('tfg-btn-1').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition";
+                labelInput.innerText = "Tema o Título del TFG:";
+                inputField.placeholder = "Ej. Ciberseguridad en infraestructuras críticas industriales...";
+            } else if(mode === 'hipotesis') {
+                document.getElementById('tfg-btn-2').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition";
+                labelInput.innerText = "Pregunta de Investigación principal:";
+                inputField.placeholder = "Ej. ¿Afecta el teletrabajo a la productividad laboral en el sector tecnológico?";
+            } else if(mode === 'bibliografia') {
+                document.getElementById('tfg-btn-3').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition";
+                labelInput.innerText = "Área o palabras clave de referencia:";
+                inputField.placeholder = "Ej. Machine Learning, redes neuronales, medicina preventiva...";
+            }
+        }
+
+        function generarTfg() {
+            const val = document.getElementById('tfg-input').value.trim();
+            if(!val) {
+                alert("Por favor, introduce un texto en el campo correspondiente.");
+                return;
+            }
+
+            const output = document.getElementById('tfg-output');
+            const box = document.getElementById('tfg-result-box');
+            box.classList.remove('hidden');
+
+            if(currentTfgMode === 'estructura') {
+                output.innerText = `[ESTRUCTURA PROPUESTA PARA TFG]\n\n1. Introducción y Justificación\n   - Contexto del problema: ${val}\n   - Motivación y relevancia académica\n2. Objetivos del Trabajo\n   - Objetivo General y Objetivos Específicos\n3. Estado del Arte / Marco Teórico\n   - Revisión bibliográfica de antecedentes\n4. Metodología\n   - Enfoque analítico, herramientas y fuentes de datos\n5. Desarrollo y Análisis de Resultados\n   - Implementación práctica o estudio empírico\n6. Conclusiones y Futuras Líneas de Investigación\n7. Referencias Bibliográficas`;
+            } else if(currentTfgMode === 'hipotesis') {
+                output.innerText = `[OBJETIVOS E HIPÓTESIS SUGERIDAS]\n\nPregunta base: "${val}"\n\n• Objetivo General:\n  Evaluar empíricamente la correlación y el impacto directo de las variables principales sobre el fenómeno analizado.\n\n• Hipótesis Principal (H1):\n  Existe una relación estadísticamente significativa y positiva entre la adopción de los factores evaluados y la optimización del rendimiento final.\n\n• Hipótesis Nula (H0):\n  No se aprecian variaciones significativas atribuibles a los factores de estudio.`;
+            } else if(currentTfgMode === 'bibliografia') {
+                output.innerText = `[EJEMPLOS DE REFERENCIAS BIBLIOGRÁFICAS (Normas APA 7ª Edición)]\n\n• Autor, A. (2025). Fundamentos avanzados y aplicación práctica de ${val}. Editorial Académica Española.\n• Pérez, J., & Gómez, M. (2024). Análisis metodológico en entornos de investigación científica. Revista Iberoamericana de Educación Superior, 14(2), 45-62.\n• Smith, J. K. (2023). Modern perspectives and technological impacts. Academic Press. https://doi.org/10.1016/j.example.2023.05`;
+            }
+        }
+
+        function copiarTfg() {
+            const text = document.getElementById('tfg-output').innerText;
+            navigator.clipboard.writeText(text);
+            alert("¡Contenido copiado al portapapeles!");
+        }
+    </script>
+</body>
+</html>
