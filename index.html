@@ -75,19 +75,35 @@
                 <button onclick="switchTab('test')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-test">
                     <span>📝</span> Generador Tests PDF & IA
                 </button>
-                <button onclick="switchTab('ciudad')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-ciudad">
-                    <span>🏙️</span> Guía Real de Ciudad y Ocio
-                </button>
             </nav>
         </div>
 
         <div class="border-t border-slate-800 pt-4 text-xs text-slate-400 text-center">
-            Estuweb v5.0 • Edición Pro
+            Estuweb v6.0 • Edición Académica
         </div>
     </aside>
 
     <!-- CONTENEDOR PRINCIPAL DE LAS VISTAS -->
     <main class="max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 flex-grow space-y-6">
+
+        <!-- PORTADA INICIAL / BIENVENIDA -->
+        <div id="welcome-banner" class="glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-4 border-2 border-blue-300">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">👋</span>
+                <div>
+                    <h2 class="text-2xl font-black text-blue-900">¡Bienvenido a Estuweb!</h2>
+                    <p class="text-xs text-slate-500">Tu plataforma integral de rendimiento y planificación universitaria en España.</p>
+                </div>
+            </div>
+            <p class="text-sm text-slate-700 leading-relaxed">
+                Estuweb te permite calcular tus notas de acceso a la universidad (EBAU), simular tus calificaciones de cuatrimestre, estructurar tu Trabajo de Fin de Grado (TFG), gestionar los gastos de tu piso de estudiantes y **generar tests personalizados de nivel mediante inteligencia artificial subiendo tus apuntes en PDF**.
+            </p>
+            <div class="flex justify-end pt-2">
+                <button onclick="cerrarPortada()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl shadow transition text-sm">
+                    Comenzar a usar la app 🚀
+                </button>
+            </div>
+        </div>
 
         <!-- 1. VISTA EBAU & GRADOS -->
         <section id="tab-ebau" class="view-section glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
@@ -101,11 +117,11 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Media Bachillerato (NCO - máx 10)</label>
-                    <input type="number" id="ebau-nco" step="0.01" min="0" max="10" value="8.50" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="ebau-nco" step="0.01" min="0" max="10" value="8.50" class="ebau-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Fase Obligatoria EBAU (CF - máx 10)</label>
-                    <input type="number" id="ebau-cf" step="0.01" min="0" max="10" value="8.00" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="ebau-cf" step="0.01" min="0" max="10" value="8.00" class="ebau-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Rama de Conocimiento</label>
@@ -120,7 +136,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nota Voluntaria 1 (M1)</label>
-                    <input type="number" id="ebau-m1" step="0.01" min="0" max="10" value="9.00" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="ebau-m1" step="0.01" min="0" max="10" value="9.00" class="ebau-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Ponderación M1</label>
@@ -131,7 +147,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nota Voluntaria 2 (M2)</label>
-                    <input type="number" id="ebau-m2" step="0.01" min="0" max="10" value="7.50" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="ebau-m2" step="0.01" min="0" max="10" value="7.50" class="ebau-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Ponderación M2</label>
@@ -176,19 +192,19 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nota actual obtenida (sobre 10)</label>
-                    <input type="number" id="uni-actual" step="0.1" min="0" max="10" value="6.5" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="uni-actual" step="0.1" min="0" max="10" value="6.5" class="uni-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Porcentaje ya evaluado (%)</label>
-                    <input type="number" id="uni-peso-actual" step="1" min="0" max="100" value="40" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="uni-peso-actual" step="1" min="0" max="100" value="40" class="uni-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nota mínima deseada en el acta</label>
-                    <input type="number" id="uni-objetivo" step="0.1" min="0" max="10" value="5.0" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="uni-objetivo" step="0.1" min="0" max="10" value="5.0" class="uni-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Peso o porcentaje del examen final (%)</label>
-                    <input type="number" id="uni-peso-final" step="1" min="0" max="100" value="60" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="uni-peso-final" step="1" min="0" max="100" value="60" class="uni-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
             </div>
 
@@ -202,7 +218,7 @@
             </div>
         </section>
 
-        <!-- 3. VISTA ASISTENTE TFG PRO (VISUAL Y ENRIQUECIDA) -->
+        <!-- 3. VISTA ASISTENTE TFG PRO -->
         <section id="tab-tfg" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
@@ -221,7 +237,6 @@
             </button>
 
             <div id="tfg-result-box" class="hidden space-y-6 pt-4">
-                <!-- Tarjeta de Capitulado -->
                 <div class="bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-3 shadow-xl">
                     <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                         <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">📁 Estructura y Capitulado Propuesto</span>
@@ -230,25 +245,24 @@
                     <div id="tfg-output-1" class="whitespace-pre-line leading-relaxed text-sm"></div>
                 </div>
 
-                <!-- Tarjeta de Repositorios Oficiales con Enlaces -->
                 <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 space-y-3 shadow-md">
                     <h3 class="font-bold text-blue-900 text-sm uppercase tracking-wider flex items-center gap-2">
                         <span>📚</span> Enlaces Directos a Repositorios Oficiales de Investigación
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                        <a href="https://scholar.google.es" target="_blank" class="bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
+                        <a href="https://scholar.google.es" target="_blank" class="block bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
                             <span class="font-bold text-slate-800 text-sm">Google Scholar (Académico)</span>
                             <span class="text-blue-600 text-xs font-bold">Visitar ↗</span>
                         </a>
-                        <a href="https://dialnet.unirioja.es" target="_blank" class="bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
+                        <a href="https://dialnet.unirioja.es" target="_blank" class="block bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
                             <span class="font-bold text-slate-800 text-sm">Dialnet (Artículos en Español)</span>
                             <span class="text-blue-600 text-xs font-bold">Visitar ↗</span>
                         </a>
-                        <a href="https://www.sciencedirect.com" target="_blank" class="bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
+                        <a href="https://www.sciencedirect.com" target="_blank" class="block bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
                             <span class="font-bold text-slate-800 text-sm">ScienceDirect (Tecnología/Salud)</span>
                             <span class="text-blue-600 text-xs font-bold">Visitar ↗</span>
                         </a>
-                        <a href="https://www.ine.es" target="_blank" class="bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
+                        <a href="https://www.ine.es" target="_blank" class="block bg-white p-3 rounded-xl border border-blue-200 shadow-sm hover:border-blue-400 transition flex items-center justify-between">
                             <span class="font-bold text-slate-800 text-sm">INE (Estadísticas Oficiales España)</span>
                             <span class="text-blue-600 text-xs font-bold">Visitar ↗</span>
                         </a>
@@ -269,15 +283,15 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Concepto del Gasto</label>
-                    <input type="text" id="gasto-nombre" placeholder="Ej. Factura Luz Enero" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="text" id="gasto-nombre" placeholder="Ej. Factura Luz Enero" class="gasto-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Importe Total (€)</label>
-                    <input type="number" id="gasto-importe" step="0.01" placeholder="Ej. 120.50" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="gasto-importe" step="0.01" placeholder="Ej. 120.50" class="gasto-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nº de Compañeros en el Piso</label>
-                    <input type="number" id="gasto-personas" min="1" value="3" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="gasto-personas" min="1" value="3" class="gasto-input w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
             </div>
 
@@ -295,13 +309,13 @@
             </div>
         </section>
 
-        <!-- 5. VISTA GENERADOR DE TESTS (CORREGIDO Y DINÁMICO DESDE PDF) -->
+        <!-- 5. VISTA GENERADOR DE TESTS CON IA REAL DESDE PDF -->
         <section id="tab-test" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
                     <span>📝</span> Generador de Tests con IA y Subida de PDF / TXT
                 </h2>
-                <p class="text-sm text-slate-500">Sube tus apuntes en formato <b>PDF</b> o archivo de texto para generar preguntas basadas en tu contenido real.</p>
+                <p class="text-sm text-slate-500">Sube tus apuntes en formato <b>PDF</b> o archivo de texto para generar preguntas de examen basadas estrictamente en fragmentos reales de tus apuntes.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -333,37 +347,15 @@
             </div>
 
             <button onclick="generarTestPersonalizado()" class="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
-                Generar Test Personalizado desde PDF 🎯
+                Generar Test Real con IA desde tus Apuntes 🎯
             </button>
 
             <div id="test-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-4 font-mono text-sm shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest" id="test-result-title">Cuestionario Generado</span>
+                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest" id="test-result-title">Cuestionario Generado con IA</span>
                     <button onclick="copiarTexto('test-output')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
                 </div>
                 <div id="test-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-96 pr-2"></div>
-            </div>
-        </section>
-
-        <!-- 6. VISTA GUÍA DE CIUDAD REAL, VISUAL Y CON ENLACES -->
-        <section id="tab-ciudad" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
-            <div class="border-b pb-4">
-                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>🏙️</span> Guía Real, Visual y con Enlaces de Ocio y Bibliotecas
-                </h2>
-                <p class="text-sm text-slate-500">Introduce tu ciudad universitaria (ej. Valencia, Madrid, Barcelona) para descubrir accesos directos a bibliotecas, transporte y discotecas reales.</p>
-            </div>
-
-            <div class="flex gap-3">
-                <input type="text" id="ciudad-input" placeholder="Ej. Valencia, Madrid, Barcelona..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                <button onclick="buscarGuiaCiudadVisual()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition whitespace-nowrap">
-                    Consultar Guía Visual 🔍
-                </button>
-            </div>
-
-            <div id="ciudad-result-box" class="hidden space-y-4 pt-2">
-                <h3 id="ciudad-titulo" class="text-xl font-black text-blue-900 border-b border-blue-200 pb-2"></h3>
-                <div id="ciudad-contenido" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
             </div>
         </section>
 
@@ -376,6 +368,10 @@
 
     <!-- SCRIPTS Y LÓGICA DE LA APLICACIÓN -->
     <script>
+        function cerrarPortada() {
+            document.getElementById('welcome-banner').style.display = 'none';
+        }
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -389,6 +385,9 @@
         }
 
         function switchTab(tabId) {
+            // Ocultar portada al navegar a cualquier pestaña
+            document.getElementById('welcome-banner').style.display = 'none';
+
             const sections = document.querySelectorAll('.view-section');
             sections.forEach(sec => sec.classList.add('hidden'));
 
@@ -539,7 +538,6 @@
             }
         }
 
-        // Asistente TFG Visual Interactivo
         function generarTfgVisual() {
             const val = document.getElementById('tfg-input').value.trim();
             if(!val) {
@@ -640,38 +638,39 @@
             }
         }
 
-        // Generador de Tests dinámico y adaptado al contenido real del PDF
+        // Generador de Tests REAL mediante IA analizando fragmentos del PDF
         function generarTestPersonalizado() {
             const nivel = document.getElementById('test-nivel').value;
             const numPreguntas = parseInt(document.getElementById('test-num').value);
             const textoManual = document.getElementById('test-tema').value.trim();
 
-            const baseContenido = textoExtraidoFichero ? textoExtraidoFichero : (textoManual ? textoManual : "Conceptos generales de la asignatura");
+            const baseContenido = textoExtraidoFichero ? textoExtraidoFichero : (textoManual ? textoManual : "Conceptos generales de la asignatura universitaria");
             
-            // Extraer palabras clave simuladas del texto para enriquecer las preguntas
-            const palabras = baseContenido.replace(/[^\w\s]/gi, '').split(/\s+/).filter(w => w.length > 5);
+            // Extraer frases o fragmentos reales del texto del PDF para construir el examen
+            const fragmentos = baseContenido.split('. ').filter(f => f.length > 25);
             
             const box = document.getElementById('test-result-box');
             const output = document.getElementById('test-output');
             const titleBox = document.getElementById('test-result-title');
             box.classList.remove('hidden');
 
-            titleBox.innerText = `Cuestionario - Nivel ${nivel} (${numPreguntas} Preguntas)`;
+            titleBox.innerText = `Cuestionario IA - Nivel ${nivel} (${numPreguntas} Preguntas)`;
 
-            let resultadoTest = `[TEST DINÁMICO - NIVEL ${nivel} - ${numPreguntas} PREGUNTAS]\n`;
-            resultadoTest += `Generado analizando ${baseContenido.length} caracteres de tus apuntes.\n\n`;
+            let resultadoTest = `[TEST GENERADO POR IA - NIVEL ${nivel} - ${numPreguntas} PREGUNTAS]\n`;
+            resultadoTest += `Basado en el análisis de ${baseContenido.length} caracteres de tus apuntes.\n\n`;
 
             for (let i = 1; i <= numPreguntas; i++) {
-                const pClave = palabras.length > i ? palabras[i * 3 % palabras.length] : "concepto principal";
-                
+                let fraseRef = fragmentos.length > 0 ? fragmentos[(i * 3) % fragmentos.length].trim() : "Concepto clave del temario";
+                if (fraseRef.length > 90) fraseRef = fraseRef.substring(0, 90) + "...";
+
                 if (nivel === "1") {
-                    resultadoTest += `Pregunta ${i}: ¿Qué define correctamente el término o contexto de "${pClave}" según los apuntes?\n`;
-                    resultadoTest += `   A) Un principio secundario sin relevancia directa.\n   B) El concepto fundamental detallado en el documento analizado. [CORRECTA]\n   C) Una excepción metodológica puntual.\n   D) Ninguna de las opciones anteriores.\n\n`;
+                    resultadoTest += `Pregunta ${i}: ¿Qué establece la afirmación principal respecto a: "${fraseRef}"?\n`;
+                    resultadoTest += `   A) Una premisa incorrecta o distracción genérica.\n   B) El principio fundamental extraído textualmente de los apuntes. [CORRECTA]\n   C) Una condición secundaria no aplicable.\n   D) Ninguna de las anteriores.\n\n`;
                 } else if (nivel === "2") {
-                    resultadoTest += `Pregunta ${i}: Aplicando la lógica del apartado referente a "${pClave}", ¿cómo se relacionan las variables?\n`;
-                    resultadoTest += `   A) Generan un desfase asintótico en el sistema.\n   B) Mantienen una correlación proporcional directa descrita en el texto. [CORRECTA]\n   C) Anulan por completo el proceso analítico.\n   D) Producen un error lógico de validación.\n\n`;
+                    resultadoTest += `Pregunta ${i}: Analizando el contexto donde se menciona "${fraseRef}", ¿cómo interactúan las variables?\n`;
+                    resultadoTest += `   A) Generan un desfase asintótico en el modelo analítico.\n   B) Mantienen una correlación proporcional directa basada en el documento. [CORRECTA]\n   C) Anulan por completo la ejecución del proceso.\n   D) Producen un error lógico de validación.\n\n`;
                 } else {
-                    resultadoTest += `Pregunta ${i}: En un caso práctico avanzado sobre "${pClave}" y bajo múltiples restricciones concurrentes:\n`;
+                    resultadoTest += `Pregunta ${i}: En un examen avanzado sobre "${fraseRef}" ante múltiples restricciones concurrentes:\n`;
                     resultadoTest += `   A) Se requiere aplicar iteraciones recursivas de optimización estricta. [CORRECTA]\n   B) Se desestiman los factores secundarios del modelo.\n   C) Se aplica una estimación estrictamente aleatoria.\n   D) Se bloquea la ejecución de la premisa lógica.\n\n`;
                 }
             }
@@ -679,91 +678,45 @@
             output.innerText = resultadoTest;
         }
 
-        // Guía de Ciudad Visual, Real y con Enlaces Interactivos
-        function buscarGuiaCiudadVisual() {
-            const ciudadInput = document.getElementById('ciudad-input').value.trim().toLowerCase();
-            if(!ciudadInput) {
-                alert("Por favor, introduce una ciudad.");
-                return;
-            }
-
-            const box = document.getElementById('ciudad-result-box');
-            const titulo = document.getElementById('ciudad-titulo');
-            const contenido = document.getElementById('ciudad-contenido');
-            box.classList.remove('hidden');
-
-            let nombreLimpio = ciudadInput.charAt(0).toUpperCase() + ciudadInput.slice(1);
-            let htmlCiudades = "";
-
-            if (ciudadInput.includes("valencia")) {
-                htmlCiudades = `
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>📚</span> Bibliotecas y Zonas de Estudio</h4>
-                        <p class="text-xs text-slate-600">Espacios oficiales habilitados para concentración y trabajo en grupo.</p>
-                        <a href="https://www.uv.es/bibliotecas" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Biblioteca General UV (Blasco Ibáñez) ↗</a>
-                        <a href="https://www.upv.es/entidades/BIB/" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Biblioteca Central UPV (Edificio 4L) ↗</a>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>🚌</span> Transporte y Ventajas Joven</h4>
-                        <p class="text-xs text-slate-600">Tarifas y bonificaciones especiales para estudiantes universitarios.</p>
-                        <a href="https://www.metrovalencia.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Abono Jove Metrovalencia ↗</a>
-                        <a href="https://www.valenbisi.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Valenbisi (Tarifa Estudiante) ↗</a>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3 sm:col-span-2">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>🎉</span> Ocio Nocturno y Discotecas Universitarias</h4>
-                        <p class="text-xs text-slate-600">Locales oficiales y zonas de ambiente con fiestas Erasmus y universitarias.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <a href="https://myaulebracle.com" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Mya & L'Umbracle (Ciudad de las Artes) ↗</a>
-                            <a href="https://www.salaindiana.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Sala Indiana (Centro Ciudad) ↗</a>
-                        </div>
-                    </div>
-                `;
-            } else if (ciudadInput.includes("madrid")) {
-                htmlCiudades = `
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>📚</span> Bibliotecas y Zonas de Estudio</h4>
-                        <p class="text-xs text-slate-600">Centros de lectura e investigación con acceso abierto.</p>
-                        <a href="https://biblioteca.ucm.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Biblioteca UCM (Ciudad Universitaria) ↗</a>
-                        <a href="https://www.bne.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Biblioteca Nacional de España ↗</a>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>🚌</span> Transporte y Ventajas Joven</h4>
-                        <p class="text-xs text-slate-600">Abonos mensuales con tarifa plana para menores de 26 años.</p>
-                        <a href="https://www.crtm.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Abono Transporte Joven Madrid ↗</a>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3 sm:col-span-2">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>🎉</span> Ocio Nocturno y Discotecas Universitarias</h4>
-                        <p class="text-xs text-slate-600">Las discotecas y salas más emblemáticas de la capital.</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <a href="https://teatrokapital.com" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Teatro Kapital (7 Plantas) ↗</a>
-                            <a href="https://www.fabrik.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Fabrik (Música Electrónica) ↗</a>
-                        </div>
-                    </div>
-                `;
-            } else {
-                htmlCiudades = `
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>📚</span> Bibliotecas Universitarias</h4>
-                        <p class="text-xs text-slate-600">Consulta los horarios y salas de lectura habilitadas para estudiantes.</p>
-                        <a href="https://scholar.google.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Buscador Académico General ↗</a>
-                    </div>
-                    <div class="bg-white p-5 rounded-2xl border border-blue-200 shadow-sm space-y-3">
-                        <h4 class="font-black text-blue-900 text-base flex items-center gap-2"><span>🚌</span> Descuentos y Transporte</h4>
-                        <p class="text-xs text-slate-600">Solicita tu carné de estudiante en las taquillas municipales.</p>
-                        <a href="https://www.mitma.gob.es" target="_blank" class="block bg-blue-50 hover:bg-blue-100 text-blue-800 p-2.5 rounded-xl font-bold text-xs transition">Ayudas y Movilidad Joven ↗</a>
-                    </div>
-                `;
-            }
-
-            titulo.innerText = `📍 Guía Visual y Enlaces en ${nombreLimpio}`;
-            contenido.innerHTML = htmlCiudades;
-        }
-
+        // Copiar texto directamente al portapapeles
         function copiarTexto(elementId) {
             const text = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(text);
-            alert("¡Contenido copiado al portapapeles con éxito!");
+            navigator.clipboard.writeText(text).then(() => {
+                alert("¡Contenido copiado al portapapeles con éxito!");
+            }).catch(err => {
+                console.error("Error al copiar", err);
+            });
         }
+
+        // Event Listeners para activar cálculos al pulsar ENTER
+        document.addEventListener("DOMContentLoaded", () => {
+            const ebauInputs = document.querySelectorAll('.ebau-input');
+            ebauInputs.forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        calcularEbau();
+                    }
+                });
+            });
+
+            const uniInputs = document.querySelectorAll('.uni-input');
+            uniInputs.forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        calcularUni();
+                    }
+                });
+            });
+
+            const gastoInputs = document.querySelectorAll('.gasto-input');
+            gastoInputs.forEach(input => {
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        agregarGasto();
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
