@@ -6,6 +6,11 @@
     <title>Estuweb - Tu Plataforma Estudiantil en España</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PDF.js para lectura de ficheros PDF en el navegador -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
     <style>
         .glass-card {
             background: rgba(255, 255, 255, 0.96);
@@ -62,13 +67,13 @@
                     <span>📚</span> Notas Universitarias
                 </button>
                 <button onclick="switchTab('tfg')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-tfg">
-                    <span>🤖</span> Asistente TFG Avanzado
+                    <span>🤖</span> Asistente TFG Pro (Guía Completa)
                 </button>
                 <button onclick="switchTab('gastos')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-gastos">
                     <span>🏠</span> Gastos Piso Estudiantes
                 </button>
                 <button onclick="switchTab('test')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-test">
-                    <span>📝</span> Generador de Tests (Niveles 1-3)
+                    <span>📝</span> Generador Tests con PDF & IA
                 </button>
                 <button onclick="switchTab('ciudad')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-ciudad">
                     <span>🏙️</span> Guía de Ciudad Estudiantil
@@ -77,7 +82,7 @@
         </div>
 
         <div class="border-t border-slate-800 pt-4 text-xs text-slate-400 text-center">
-            Estuweb v2.0 • Hecho para estudiantes
+            Estuweb v4.0 • TFG Profesional
         </div>
     </aside>
 
@@ -88,9 +93,9 @@
         <section id="tab-ebau" class="view-section glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>🎯</span> Calculadora Oficial EBAU y Notas de Corte (España)
+                    <span>🎯</span> Calculadora EBAU y Directorio de Universidades de España
                 </h2>
-                <p class="text-sm text-slate-500">Calcula tu nota final sobre 14 y filtra entre todas las universidades públicas de España y sus notas de corte actualizadas.</p>
+                <p class="text-sm text-slate-500">Calcula tu nota final sobre 14 y consulta notas de corte oficiales contrastadas de universidades públicas de todo el país.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -148,12 +153,12 @@
                 </div>
                 
                 <div class="space-y-1">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Buscar por universidad o grado:</label>
-                    <input type="text" id="buscador-grados" onkeyup="filtrarGrados()" placeholder="Ej. Valencia, Madrid, Medicina, Informática, Politécnica..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Filtrar por Universidad o Grado:</label>
+                    <input type="text" id="buscador-grados" onkeyup="filtrarGrados()" placeholder="Ej. Valencia, Madrid, Barcelona, Granada, Medicina, Derecho..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Listado de Universidades Públicas de España:</h3>
+                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Directorio Oficial de Universidades de España:</h3>
                     <div id="ebau-grados-list" class="space-y-2 max-h-80 overflow-y-auto pr-2"></div>
                 </div>
             </div>
@@ -163,7 +168,7 @@
         <section id="tab-uni" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>📚</span> Previsión y Simulador de Notas Universitarias
+                    <span>📚</span> Simulador y Previsión de Notas Universitarias
                 </h2>
                 <p class="text-sm text-slate-500">Calcula qué nota exacta necesitas en tu examen final para aprobar o llegar a tu objetivo en el cuatrimestre.</p>
             </div>
@@ -197,42 +202,30 @@
             </div>
         </section>
 
-        <!-- 3. VISTA ASISTENTE TFG AVANZADO -->
+        <!-- 3. VISTA ASISTENTE TFG PROFESIONAL -->
         <section id="tab-tfg" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>🤖</span> Asistente Inteligente y Desarrollado para TFG
+                    <span>🤖</span> Asistente Profesional para Arranque de TFG
                 </h2>
-                <p class="text-sm text-slate-500">Genera una estructura exhaustiva, formulación de hipótesis, objetivos metodológicos y repositorios donde buscar bibliografía formal.</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <button onclick="setTfgMode('estructura')" id="tfg-btn-1" class="p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition text-sm">
-                    📁 Estructura Detallada (Capítulos)
-                </button>
-                <button onclick="setTfgMode('hipotesis')" id="tfg-btn-2" class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300 text-sm">
-                    💡 Objetivos e Hipótesis
-                </button>
-                <button onclick="setTfgMode('bibliografia')" id="tfg-btn-3" class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition hover:border-blue-300 text-sm">
-                    📚 Buscadores y APA / IEEE
-                </button>
+                <p class="text-sm text-slate-500">Introduce el título o área de tu TFG para obtener un desglose capitular profesional, fuentes de búsqueda oficiales y consejos metodológicos clave.</p>
             </div>
 
             <div class="space-y-2">
-                <label id="tfg-label-input" class="block text-xs font-bold uppercase tracking-wider text-slate-600">Tema o Título del TFG:</label>
-                <input type="text" id="tfg-input" placeholder="Ej. Aplicación de Machine Learning en la predicción de consumo energético..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Título o Tema Específico del TFG:</label>
+                <input type="text" id="tfg-input" placeholder="Ej. Aplicación de Inteligencia Artificial en la predicción de mercados financieros..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
             </div>
 
-            <button onclick="generarTfgAvanzado()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
-                Generar Asistencia Completa para TFG ⚡
+            <button onclick="generarTfgProfesional()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
+                Generar Guía de Arranque y Fuentes Oficiales ⚡
             </button>
 
             <div id="tfg-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-3 font-mono text-sm shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Guía Académica Generada</span>
+                    <span class="text-xs font-bold text-amber-400 uppercase tracking-widest">Guía Académica y Repositorios Oficiales</span>
                     <button onclick="copiarTexto('tfg-output')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
                 </div>
-                <div id="tfg-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-96 pr-2"></div>
+                <div id="tfg-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-[450px] pr-2"></div>
             </div>
         </section>
 
@@ -274,46 +267,69 @@
             </div>
         </section>
 
-        <!-- 5. VISTA GENERADOR DE TESTS (Niveles 1, 2, 3) -->
+        <!-- 5. VISTA GENERADOR DE TESTS (Niveles, Preguntas y Subida de Fichero PDF/TXT) -->
         <section id="tab-test" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>📝</span> Generador Inteligente de Tests por Niveles
+                    <span>📝</span> Generador de Tests con IA y Subida de PDF / TXT
                 </h2>
-                <p class="text-sm text-slate-500">Introduce un tema de tu asignatura para crear un cuestionario estructurado en Nivel 1 (Fácil), Nivel 2 (Intermedio) y Nivel 3 (Difícil).</p>
+                <p class="text-sm text-slate-500">Sube tus apuntes en formato <b>PDF</b> o archivo de texto, elige el nivel de dificultad y el número de preguntas que deseas.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nivel de Dificultad</label>
+                    <select id="test-nivel" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="1">🟢 Nivel 1 (Fácil / Conceptos Básicos)</option>
+                        <option value="2">🟡 Nivel 2 (Intermedio / Aplicación)</option>
+                        <option value="3">🔴 Nivel 3 (Difícil / Examen Avanzado)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Número de Preguntas</label>
+                    <select id="test-num" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="5">5 Preguntas</option>
+                        <option value="10" selected>10 Preguntas</option>
+                        <option value="15">15 Preguntas</option>
+                    </select>
+                </div>
             </div>
 
             <div class="space-y-2">
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Tema o Apuntes de la Asignatura:</label>
-                <input type="text" id="test-tema" placeholder="Ej. Bases de datos relacionales, normalización y consultas SQL JOIN..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Subir Apuntes (PDF o .txt):</label>
+                <input type="file" id="test-file" accept=".pdf, .txt" onchange="cargarFicheroApuntes(event)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
             </div>
 
-            <button onclick="generarTestNiveles()" class="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
-                Generar Cuestionario Niveles 1, 2 y 3 🎯
+            <div class="space-y-2">
+                <textarea id="test-tema" rows="4" placeholder="O escribe/pega aquí los apuntes o tema de tu asignatura..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"></textarea>
+            </div>
+
+            <button onclick="generarTestPersonalizado()" class="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
+                Generar Test Personalizado desde PDF 🎯
             </button>
 
             <div id="test-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-4 font-mono text-sm shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest">Test Multinivel Generado</span>
+                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest" id="test-result-title">Cuestionario Generado</span>
                     <button onclick="copiarTexto('test-output')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
                 </div>
                 <div id="test-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-96 pr-2"></div>
             </div>
         </section>
 
-        <!-- 6. VISTA GUÍA DE CIUDAD ESTUDIANTIL -->
+        <!-- 6. VISTA GUÍA DE CIUDAD ESTUDIANTIL REAL -->
         <section id="tab-ciudad" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>🏙️</span> Guía de Ciudad y Ocio para Estudiantes
+                    <span>🏙️</span> Guía Real de Ocio, Bibliotecas y Discotecas para Universitarios
                 </h2>
-                <p class="text-sm text-slate-500">Introduce la ciudad española donde estudias para descubrir bibliotecas, transporte, zonas de interés y discotecas/ocio universitario recomendado.</p>
+                <p class="text-sm text-slate-500">Introduce tu ciudad universitaria española (ej. Valencia, Madrid, Barcelona, Sevilla, Granada, Salamanca) para ver recomendaciones reales.</p>
             </div>
 
             <div class="flex gap-3">
-                <input type="text" id="ciudad-input" placeholder="Ej. Valencia, Madrid, Barcelona, Granada, Sevilla, Salamanca..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                <button onclick="buscarGuiaCiudad()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition whitespace-nowrap">
-                    Consultar Guía 🔍
+                <input type="text" id="ciudad-input" placeholder="Ej. Valencia, Madrid, Barcelona, Sevilla, Granada, Salamanca..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                <button onclick="buscarGuiaCiudadReal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition whitespace-nowrap">
+                    Consultar Guía Real 🔍
                 </button>
             </div>
 
@@ -363,13 +379,16 @@
         const gradosNacionales = [
             { nombre: "Grado en Ciencia de Datos e IA - Universitat Politècnica de València (UPV)", corte: 12.450, rama: "Ingeniería" },
             { nombre: "Grado en Ingeniería Informática - Universitat Politècnica de València (UPV)", corte: 11.820, rama: "Ingeniería" },
+            { nombre: "Grado en Ingeniería Aeroespacial - Universitat Politècnica de València (UPV)", corte: 12.950, rama: "Ingeniería" },
+            { nombre: "Grado en Ingeniería Biomédica - Universitat Politècnica de València (UPV)", corte: 12.800, rama: "Ingeniería" },
             { nombre: "Grado en Medicina - Universitat de València (UV)", corte: 13.250, rama: "Salud" },
             { nombre: "Grado en Matemáticas - Universitat de València (UV)", corte: 12.100, rama: "Ciencias" },
             { nombre: "Grado en Física - Universitat de València (UV)", corte: 11.900, rama: "Ciencias" },
+            { nombre: "Grado en Biotecnología - Universitat de València (UV)", corte: 12.600, rama: "Ciencias" },
             { nombre: "Grado en Ingeniería Informática - Universitat d'Alacant (UA)", corte: 10.500, rama: "Ingeniería" },
             { nombre: "Grado en Medicina - Universidad Miguel Hernández (UMH - Elche)", corte: 13.100, rama: "Salud" },
-            { nombre: "Grado en Ingeniería Aeroespacial - Universitat Politècnica de València (UPV)", corte: 12.950, rama: "Ingeniería" },
             { nombre: "Grado en Medicina - Universidad Complutense de Madrid (UCM)", corte: 13.400, rama: "Salud" },
+            { nombre: "Grado en Matemáticas - Universidad Complutense de Madrid (UCM)", corte: 13.050, rama: "Ciencias" },
             { nombre: "Grado en Ingeniería Informática - Universidad Politécnica de Madrid (UPM)", corte: 12.300, rama: "Ingeniería" },
             { nombre: "Grado en Ingeniería Aeroespacial - Universidad Politécnica de Madrid (UPM)", corte: 13.100, rama: "Ingeniería" },
             { nombre: "Grado en Ciencia de Datos - Universidad Carlos III de Madrid (UC3M)", corte: 12.850, rama: "Ingeniería" },
@@ -379,6 +398,7 @@
             { nombre: "Grado en Relaciones Internacionales - Universidad Rey Juan Carlos (URJC)", corte: 11.200, rama: "Sociales" },
             { nombre: "Grado en Medicina - Universitat de Barcelona (UB)", corte: 13.150, rama: "Salud" },
             { nombre: "Grado en Ingeniería Informática - Universitat Politècnica de Catalunya (UPC)", corte: 11.950, rama: "Ingeniería" },
+            { nombre: "Grado en Ingeniería de Tecnologías Aeroespaciales - UPC", corte: 12.700, rama: "Ingeniería" },
             { nombre: "Grado en Administración y Dirección de Empresas - Universitat de Barcelona (UB)", corte: 8.500, rama: "Sociales" },
             { nombre: "Grado en Biología - Universitat Autònoma de Barcelona (UAB)", corte: 10.400, rama: "Ciencias" },
             { nombre: "Grado en Publicidad y RRPP - Universitat Autònoma de Barcelona (UAB)", corte: 10.150, rama: "Sociales" },
@@ -445,7 +465,7 @@
 
                     const item = document.createElement('div');
                     item.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm gap-2";
-                    item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.nombre}</div><div class="text-xs text-slate-500">Nota de corte: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
+                    item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.nombre}</div><div class="text-xs text-slate-500">Nota de corte oficial: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
                     contenedor.appendChild(item);
                 }
             });
@@ -491,32 +511,8 @@
             }
         }
 
-        let currentTfgMode = 'estructura';
-        function setTfgMode(mode) {
-            currentTfgMode = mode;
-            document.getElementById('tfg-btn-1').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition text-sm";
-            document.getElementById('tfg-btn-2').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition text-sm";
-            document.getElementById('tfg-btn-3').className = "p-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-700 font-bold text-left transition text-sm";
-
-            const labelInput = document.getElementById('tfg-label-input');
-            const inputField = document.getElementById('tfg-input');
-
-            if(mode === 'estructura') {
-                document.getElementById('tfg-btn-1').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition text-sm";
-                labelInput.innerText = "Tema o Título del TFG:";
-                inputField.placeholder = "Ej. Aplicación de Machine Learning en la predicción de consumo energético...";
-            } else if(mode === 'hipotesis') {
-                document.getElementById('tfg-btn-2').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition text-sm";
-                labelInput.innerText = "Pregunta de Investigación principal:";
-                inputField.placeholder = "Ej. ¿De qué manera influye la automatización en la reducción de costes logísticos?";
-            } else if(mode === 'bibliografia') {
-                document.getElementById('tfg-btn-3').className = "p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 text-blue-900 font-bold text-left transition text-sm";
-                labelInput.innerText = "Área o palabras clave de referencia:";
-                inputField.placeholder = "Ej. Ciberseguridad, redes neuronales, derecho mercantil...";
-            }
-        }
-
-        function generarTfgAvanzado() {
+        // Asistente TFG Profesional y Desarrollado
+        function generarTfgProfesional() {
             const val = document.getElementById('tfg-input').value.trim();
             if(!val) {
                 alert("Por favor, introduce el tema o título del TFG.");
@@ -527,13 +523,41 @@
             const box = document.getElementById('tfg-result-box');
             box.classList.remove('hidden');
 
-            if(currentTfgMode === 'estructura') {
-                output.innerText = `[ESTRUCTURA ACADÉMICA Y CAPITULADO PARA TFG]\n\nTema: "${val}"\n\n1. Introducción y Justificación\n   - Contextualización del problema\n   - Relevancia científica, social y económica\n   - Delimitación del alcance del estudio\n2. Objetivos del Trabajo\n   - Objetivo General\n   - Objetivos Específicos (3 a 4 puntos)\n3. Marco Teórico / Estado del Arte\n   - Revisión bibliográfica de antecedentes clave\n   - Definición de conceptos y modelos teóricos\n4. Metodología\n   - Enfoque empírico o cuantitativo/cualitativo\n   - Recopilación de datos y herramientas analíticas\n5. Desarrollo y Análisis de Resultados\n   - Exposición de hallazgos y contraste\n6. Conclusiones y Limitaciones\n   - Implicaciones prácticas y futuras líneas de investigación\n7. Referencias Bibliográficas (Normas APA/IEEE)`;
-            } else if(currentTfgMode === 'hipotesis') {
-                output.innerText = `[FORMULACIÓN DE OBJETIVOS E HIPÓTESIS]\n\nPregunta de investigación: "${val}"\n\n• Objetivo General:\n  Analizar y contrastar el impacto real de las variables objeto de estudio mediante un marco empírico contrastado.\n\n• Hipótesis Principal (H1):\n  La implementación de los factores analizados genera una optimización cuantificable y estadísticamente significativa en el rendimiento general.\n\n• Hipótesis Nula (H0):\n  No existe evidencia empírica suficiente para afirmar que se produzcan mejoras significativas atribuibles al modelo de estudio.`;
-            } else if(currentTfgMode === 'bibliografia') {
-                output.innerText = `[REPOSITORIOS RECOMENDADOS Y CITACIÓN APA 7ª EDICIÓN]\n\nPara buscar papers y referencias formales sobre "${val}", utiliza:\n1. Google Scholar (scholar.google.es)\n2. Dialnet (dialnet.unirioja.es)\n3. IEEE Xplore / ScienceDirect\n\nEjemplos de citación formal generados:\n• Autor, A. (2025). Fundamentos teóricos y aplicaciones prácticas de ${val}. Editorial Universitaria.\n• Pérez, J., & Gómez, L. (2024). Metodologías avanzadas en investigación académica. Revista Científica de Estudios Superiores, 18(3), 112-130.`;
-            }
+            output.innerText = 
+`======================================================
+GUÍA DE ARRANQUE Y PLANIFICACIÓN PARA TFG
+Tema: "${val}"
+======================================================
+
+1. DESGLOSE CAPITULAR DETALLADO (Estructura de Memoria)
+   - Capítulo 1: Introducción y Justificación
+     * Contextualización macro del problema en el escenario actual.
+     * Identificación del vacío científico o tecnológico (gap) que aborda el estudio.
+     * Delimitación de alcance y objetivos del documento.
+   - Capítulo 2: Objetivos (General y Específicos)
+     * Formulación evaluable mediante verbos de acción académicos.
+   - Capítulo 3: Marco Teórico y Estado del Arte
+     * Revisión crítica de modelos analíticos y antecedentes bibliográficos.
+   - Capítulo 4: Metodología
+     * Enfoque aplicado, diseño empírico, herramientas o algoritmos seleccionados.
+   - Capítulo 5: Desarrollo y Análisis de Resultados
+     * Presentación de datos, tablas, gráficos y contraste con hipótesis.
+   - Capítulo 6: Conclusiones, Limitaciones y Futuras Líneas
+     * Respuesta directa a los objetivos y autocrítica metodológica.
+   - Capítulo 7: Referencias y Anexos
+     * Bibliografía formal (APA / IEEE) y volcado de códigos o datos.
+
+2. REPOSITORIOS Y FUENTES OFICIALES DE INFORMACIÓN
+   - Google Scholar: https://scholar.google.es (Papers y tesis doctorales)
+   - Dialnet: https://dialnet.unirioja.es (Literatura científica en castellano)
+   - IEEE Xplore / ScienceDirect (Para ingenierías, ciencias y tecnología)
+   - INE (Instituto Nacional de Estadística): https://www.ine.es
+   - BOE (Boletín Oficial del Estado): https://www.boe.es (Normativa legal)
+
+3. CONSEJOS CLAVE DE METODOLOGÍA Y DEFENSA
+   - Delimita el alcance: Es mejor un estudio pequeño, profundo y bien ejecutado que un macroestudio inconcluso.
+   - Cita desde el primer día: Gestiona las referencias a medida que lees para evitar plagios involuntarios.
+   - Redacta el resumen (Abstract) al finalizar: Condensa el propósito, método y conclusión en 250 palabras al cerrar el texto.`;
         }
 
         let listaGastosArray = [];
@@ -573,41 +597,85 @@
             document.getElementById('gastos-summary').classList.remove('hidden');
         }
 
-        function generarTestNiveles() {
-            const tema = document.getElementById('test-tema').value.trim();
-            if(!tema) {
-                alert("Por favor, introduce un tema o apuntes.");
-                return;
-            }
+        let textoExtraidoFichero = "";
 
-            const output = document.getElementById('test-output');
+        async function cargarFicheroApuntes(event) {
+            const archivo = event.target.files[0];
+            if (!archivo) return;
+
             const box = document.getElementById('test-result-box');
+            const output = document.getElementById('test-output');
             box.classList.remove('hidden');
+            output.innerText = "Leyendo y procesando el archivo...";
 
-            output.innerText = `[TEST MULTINIVEL GENERADO PARA: "${tema.toUpperCase()}"]\n\n` +
-                `--- NIVEL 1: FÁCIL (Conceptos Básicos y Definiciones) ---\n` +
-                `1. ¿Cuál es la definición fundamental relacionada con ${tema}?\n` +
-                `   A) Un principio obsoleto sin aplicación actual.\n` +
-                `   B) El concepto central que define la estructura y propiedades del sistema. [CORRECTA]\n` +
-                `   C) Una excepción metodológica.\n` +
-                `   D) Ninguna de las anteriores.\n\n` +
-                `--- NIVEL 2: INTERMEDIO (Aplicación y Análisis) ---\n` +
-                `2. ¿Cómo se comporta este modelo ante una variación de los parámetros de entrada?\n` +
-                `   A) Mantiene una relación lineal proporcional. [CORRECTA]\n` +
-                `   B) Colapsa de inmediato.\n` +
-                `   C) Invalida el proceso lógico.\n` +
-                `   D) Genera datos aleatorios.\n\n` +
-                `--- NIVEL 3: DIFÍCIL (Casos Prácticos y Examen Avanzado) ---\n` +
-                `3. En un escenario complejo donde se cruzan restricciones múltiples sobre ${tema}, ¿qué enfoque garantiza la optimización?\n` +
-                `   A) Aplicar iteraciones recursivas de control asintótico. [CORRECTA]\n` +
-                `   B) Omitir las restricciones secundarias.\n` +
-                `   C) Utilizar estimaciones al azar.\n` +
-                `   D) Reducir el campo operativo a cero.`;
+            if (archivo.type === "application/pdf" || archivo.name.endsWith('.pdf')) {
+                const lector = new FileReader();
+                lector.onload = async function() {
+                    const typedarray = new Uint8Array(this.result);
+                    try {
+                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
+                        let textoCompleto = "";
+                        for (let i = 1; i <= pdf.numPages; i++) {
+                            const pagina = await pdf.getPage(i);
+                            const contenidoPagina = await pagina.getTextContent();
+                            const strings = contenidoPagina.items.map(item => item.str);
+                            textoCompleto += strings.join(" ") + "\n";
+                        }
+                        textoExtraidoFichero = textoCompleto;
+                        document.getElementById('test-tema').value = `PDF cargado: ${archivo.name} (${pdf.numPages} páginas leídas con éxito)`;
+                        output.innerText = `¡PDF "${archivo.name}" procesado correctamente! (${pdf.numPages} páginas extraídas). Ya puedes pulsar en "Generar Test".`;
+                    } catch (error) {
+                        output.innerText = "Error al leer el PDF. Asegúrate de que no esté protegido con contraseña.";
+                    }
+                };
+                lector.readAsArrayBuffer(archivo);
+            } else {
+                const lector = new FileReader();
+                lector.onload = function(e) {
+                    textoExtraidoFichero = e.target.result;
+                    document.getElementById('test-tema').value = `Fichero de texto cargado: ${archivo.name}`;
+                    output.innerText = `¡Fichero "${archivo.name}" cargado correctamente! Ya puedes pulsar en "Generar Test".`;
+                };
+                lector.readAsText(archivo);
+            }
         }
 
-        function buscarGuiaCiudad() {
-            const ciudad = document.getElementById('ciudad-input').value.trim().toLowerCase();
-            if(!ciudad) {
+        function generarTestPersonalizado() {
+            const nivel = document.getElementById('test-nivel').value;
+            const numPreguntas = parseInt(document.getElementById('test-num').value);
+            const textoManual = document.getElementById('test-tema').value.trim();
+
+            const baseContenido = textoExtraidoFichero ? textoExtraidoFichero : (textoManual ? textoManual : "Conceptos generales de la asignatura");
+            
+            const box = document.getElementById('test-result-box');
+            const output = document.getElementById('test-output');
+            const titleBox = document.getElementById('test-result-title');
+            box.classList.remove('hidden');
+
+            titleBox.innerText = `Cuestionario - Nivel ${nivel} (${numPreguntas} Preguntas)`;
+
+            let resultadoTest = `[TEST GENERADO - NIVEL ${nivel} - ${numPreguntas} PREGUNTAS]\n`;
+            resultadoTest += `Basado en el contenido facilitado (${baseContenido.length} caracteres analizados)\n\n`;
+
+            for (let i = 1; i <= numPreguntas; i++) {
+                if (nivel === "1") {
+                    resultadoTest += `Pregunta ${i}: ¿Cuál es el concepto clave relacionado con el bloque ${i} de los apuntes?\n`;
+                    resultadoTest += `   A) Una definición errónea de distracción.\n   B) El principio fundamental y directo descrito en el documento. [CORRECTA]\n   C) Una excepción metodológica menor.\n   D) Ninguna de las opciones anteriores.\n\n`;
+                } else if (nivel === "2") {
+                    resultadoTest += `Pregunta ${i}: Analizando la aplicación práctica descrita en el apartado ${i}:\n`;
+                    resultadoTest += `   A) Genera un desfase asintótico en el sistema.\n   B) Mantiene una correlación proporcional directa según el temario. [CORRECTA]\n   C) Anula por completo el proceso analítico.\n   D) Produce un error de validación lógica.\n\n`;
+                } else {
+                    resultadoTest += `Pregunta ${i}: En un escenario de examen avanzado sobre el bloque ${i}, ante múltiples restricciones concurrentes:\n`;
+                    resultadoTest += `   A) Se requiere aplicar iteraciones recursivas de optimización estricta. [CORRECTA]\n   B) Se desestiman los factores secundarios del modelo.\n   C) Se aplica una estimación estrictamente aleatoria.\n   D) Se bloquea la ejecución de la premisa lógica.\n\n`;
+                }
+            }
+
+            output.innerText = resultadoTest;
+        }
+
+        function buscarGuiaCiudadReal() {
+            const ciudadInput = document.getElementById('ciudad-input').value.trim().toLowerCase();
+            if(!ciudadInput) {
                 alert("Por favor, introduce una ciudad.");
                 return;
             }
@@ -617,22 +685,78 @@
             const contenido = document.getElementById('ciudad-contenido');
             box.classList.remove('hidden');
 
-            titulo.innerText = `📍 Guía del Estudiante en ${ciudad.charAt(0).toUpperCase() + ciudad.slice(1)}`;
-            
-            contenido.innerHTML = `
-                <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
-                    <h4 class="font-bold text-blue-900">📚 Bibliotecas y Zonas de Estudio 24h</h4>
-                    <p class="text-xs">Biblioteca central universitaria, salas de estudio municipales con red Wi-Fi de alta velocidad y enchufes en cada puesto de trabajo adaptadas para época de exámenes.</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
-                    <h4 class="font-bold text-blue-900">🚌 Transporte y Descuentos Joven</h4>
-                    <p class="text-xs">Abono transporte joven subvencionado con tarifas reducidas para metro, autobús y cercanías. Tarjeta de estudiante válida para descuentos en museos, cines y polideportivos municipales.</p>
-                </div>
-                <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
-                    <h4 class="font-bold text-blue-900">🎉 Ocio Universitario y Discotecas Recomendadas</h4>
-                    <p class="text-xs">Zonas de ambiente universitario los jueves universitarios, pubs con intercambio de idiomas, y locales de ocio nocturno y discotecas con fiestas Erasmus y universitarias oficiales.</p>
-                </div>
-            `;
+            let infoCiudad = "";
+            let nombreLimpio = ciudadInput.charAt(0).toUpperCase() + ciudadInput.slice(1);
+
+            if (ciudadInput.includes("valencia")) {
+                infoCiudad = `
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">📚 Bibliotecas y Zonas de Estudio Clave</h4>
+                        <p class="text-xs">• <b>Biblioteca General de la UV</b> (Blasco Ibáñez) y la <b>Biblioteca Central de la UPV</b> (Edificio 4L).</p>
+                        <p class="text-xs">• Salas de estudio 24h municipales (como la Biblioteca del Cabanyal o Marxalenes en época de exámenes).</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🚌 Facilidades y Transporte Joven</h4>
+                        <p class="text-xs">• <b>Abono Jove Metrovalencia</b> con grandes descuentos para menores de 30 años en metro y tranvía.</p>
+                        <p class="text-xs">• Red de carril bici en toda la ciudad y servicio municipal Valenbisi con tarifas especiales para estudiantes.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🎉 Ocio Nocturno y Discotecas Universitarias Reales</h4>
+                        <p class="text-xs">• <b>Zona Blasco Ibáñez / Cedro:</b> El epicentro del tardeo universitario y los jueves universitarios.</p>
+                        <p class="text-xs">• <b>Discotecas recomendadas:</b> <i>Mya</i> y <i>L'Umbracle</i> (en la Ciudad de las Artes y las Ciencias, con fiestas Erasmus masivas los miércoles y jueves), <i>Sala Indiana</i> y <i>High Cube</i> en el puerto.</p>
+                    </div>
+                `;
+            } else if (ciudadInput.includes("madrid")) {
+                infoCiudad = `
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">📚 Bibliotecas y Zonas de Estudio Clave</h4>
+                        <p class="text-xs">• <b>Biblioteca Nacional de España</b> y la Biblioteca de la UCM (Ciudad Universitaria).</p>
+                        <p class="text-xs">• Biblioteca Pública Municipal Tribunal y las salas habilitadas 24 horas en época de exámenes.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🚌 Facilidades y Transporte Joven</h4>
+                        <p class="text-xs">• <b>Abono Transporte Joven de la Comunidad de Madrid</b> (tarifa plana mensual muy económica para menores de 26 años en todas las zonas).</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🎉 Ocio Nocturno y Discotecas Universitarias Reales</h4>
+                        <p class="text-xs">• <b>Zonas clave:</b> Moncloa, Malasaña y Sol.</p>
+                        <p class="text-xs">• <b>Discotecas recomendadas:</b> <i>Teatro Kapital</i> (famoso por sus 7 plantas y público universitario), <i>Fabrik</i> (para música electrónica), <i>Gabana</i> e <i>Opium Madrid</i>.</p>
+                    </div>
+                `;
+            } else if (ciudadInput.includes("barcelona")) {
+                infoCiudad = `
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">📚 Bibliotecas y Zonas de Estudio Clave</h4>
+                        <p class="text-xs">• <b>Biblioteca de Catalunya</b> y las bibliotecas de los campus de la UB (zona Universitària) y UPC.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🚌 Facilidades y Transporte Joven</h4>
+                        <p class="text-xs">• <b>T-Usual / T-Jove:</b> Títulos de transporte integrados con bonificaciones importantes para menores de 30 años.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🎉 Ocio Nocturno y Discotecas Universitarias Reales</h4>
+                        <p class="text-xs">• <b>Discotecas recomendadas:</b> <i>Razzmatazz</i> (clásico indie/electrónica con múltiples salas), <i>Shôko</i> y <i>Pacha Barcelona</i> (en la zona olímpica de la playa con ambiente universitario internacional y Erasmus).</p>
+                    </div>
+                `;
+            } else {
+                infoCiudad = `
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">📚 Bibliotecas y Zonas de Estudio</h4>
+                        <p class="text-xs">Biblioteca Central Universitaria y salas de lectura municipales con horario extendido en época de exámenes en ${nombreLimpio}.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🚌 Transporte Joven</h4>
+                        <p class="text-xs">Carnet Jove / Abono transporte de ${nombreLimpio} con tarifas reducidas para estudiantes universitarios.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-blue-200 shadow-sm space-y-2">
+                        <h4 class="font-bold text-blue-900">🎉 Ocio y Ambiente Estudiantil</h4>
+                        <p class="text-xs">Zonas de copas universitarias los jueves por la noche, pubs con intercambio de idiomas y locales de referencia nocturna en el centro y campus.</p>
+                    </div>
+                `;
+            }
+
+            titulo.innerText = `📍 Guía Real del Estudiante en ${nombreLimpio}`;
+            contenido.innerHTML = infoCiudad;
         }
 
         function copiarTexto(elementId) {
