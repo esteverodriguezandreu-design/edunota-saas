@@ -6,11 +6,6 @@
     <title>Estuweb - Tu Plataforma Estudiantil en España</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- PDF.js para lectura de ficheros PDF en el navegador -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    </script>
     <!-- Librería QRCode para el Generador de Códigos QR -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
@@ -74,9 +69,6 @@
                 <button onclick="switchTab('gastos')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-gastos">
                     <span>🏠</span> Gastos Piso Estudiantes
                 </button>
-                <button onclick="switchTab('test')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-test">
-                    <span>📝</span> Generador Tests PDF & IA
-                </button>
                 <button onclick="switchTab('qr')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-qr">
                     <span>📱</span> Generador de Códigos QR
                 </button>
@@ -87,7 +79,7 @@
         </div>
 
         <div class="border-t border-slate-800 pt-4 text-xs text-slate-400 text-center">
-            Estuweb v7.0 • Edición Completa
+            Estuweb v8.0 • Edición Definitiva
         </div>
     </aside>
 
@@ -104,7 +96,7 @@
                 </div>
             </div>
             <p class="text-sm text-slate-700 leading-relaxed">
-                Estuweb te permite calcular tus notas de acceso a la universidad (EBAU) consultando el directorio oficial con más de 1.840 grados, simular tus calificaciones de cuatrimestre, estructurar tu Trabajo de Fin de Grado (TFG), gestionar los gastos de tu piso, generar tests inteligentes a partir de tus apuntes en PDF, crear códigos QR al instante y transformar archivos.
+                Estuweb te permite calcular tus notas de acceso a la universidad (EBAU) consultando el directorio oficial con más de 1.840 grados, simular tus calificaciones de cuatrimestre, estructurar tu Trabajo de Fin de Grado (TFG), gestionar los gastos de tu piso, crear códigos QR al instante y transformar tus documentos a múltiples formatos (PDF, XLSX, CSV, TXT, etc.).
             </p>
             <div class="flex justify-end pt-2">
                 <button onclick="cerrarPortada()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl shadow transition text-sm">
@@ -135,7 +127,7 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Rama de Conocimiento</label>
                     <select id="ebau-rama" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <option value="todos">🌍 Todas las ramas</option>
-                        <option value="ingenieria">⚙️ Ingeniería y Arquitectura</option>
+                        <option value="ing">⚙️ Ingeniería y Arquitectura</option>
                         <option value="salud">🧬 Ciencias de la Salud</option>
                         <option value="sociales">📊 Ciencias Sociales y Jurídicas</option>
                         <option value="ciencias">🔬 Ciencias Experimentales</option>
@@ -317,57 +309,7 @@
             </div>
         </section>
 
-        <!-- 5. VISTA GENERADOR DE TESTS CON IA REAL DESDE PDF -->
-        <section id="tab-test" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
-            <div class="border-b pb-4">
-                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>📝</span> Generador de Tests con IA y Subida de PDF / TXT
-                </h2>
-                <p class="text-sm text-slate-500">Sube tus apuntes en formato <b>PDF</b> o archivo de texto para generar preguntas de examen basadas estrictamente en fragmentos reales de tus apuntes.</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nivel de Dificultad</label>
-                    <select id="test-nivel" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <option value="1">🟢 Nivel 1 (Fácil / Conceptos Básicos)</option>
-                        <option value="2">🟡 Nivel 2 (Intermedio / Aplicación)</option>
-                        <option value="3">🔴 Nivel 3 (Difícil / Examen Avanzado)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Número de Preguntas</label>
-                    <select id="test-num" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        <option value="5">5 Preguntas</option>
-                        <option value="10" selected>10 Preguntas</option>
-                        <option value="15">15 Preguntas</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="space-y-2">
-                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Subir Apuntes (PDF o .txt):</label>
-                <input type="file" id="test-file" accept=".pdf, .txt" onchange="cargarFicheroApuntes(event)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-            </div>
-
-            <div class="space-y-2">
-                <textarea id="test-tema" rows="4" placeholder="O escribe/pega aquí los apuntes o tema de tu asignatura..." class="w-full bg-slate-50 border border-slate-300 rounded-xl p-4 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"></textarea>
-            </div>
-
-            <button onclick="generarTestPersonalizado()" class="w-full bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
-                Generar Test Real con IA desde tus Apuntes 🎯
-            </button>
-
-            <div id="test-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-4 font-mono text-sm shadow-xl">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest" id="test-result-title">Cuestionario Generado con IA</span>
-                    <button onclick="copiarTexto('test-output')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
-                </div>
-                <div id="test-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-96 pr-2"></div>
-            </div>
-        </section>
-
-        <!-- 6. VISTA GENERADOR DE CÓDIGOS QR -->
+        <!-- 5. VISTA GENERADOR DE CÓDIGOS QR -->
         <section id="tab-qr" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
@@ -392,13 +334,13 @@
             </div>
         </section>
 
-        <!-- 7. VISTA TRANSFORMADOR DE ARCHIVOS -->
+        <!-- 6. VISTA TRANSFORMADOR DE ARCHIVOS MULTIFORMATO -->
         <section id="tab-trans" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>🔄</span> Transformador y Conversor de Archivos
+                    <span>🔄</span> Transformador y Conversor de Archivos (PDF, XLSX, CSV, TXT...)
                 </h2>
-                <p class="text-sm text-slate-500">Sube un archivo de texto o apuntes y conviértelo instantáneamente a otro formato descargable.</p>
+                <p class="text-sm text-slate-500">Sube tus apuntes o documentos y conviértelos instantáneamente al formato descargable que prefieras.</p>
             </div>
 
             <div class="space-y-4">
@@ -410,6 +352,9 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Formato de Conversión Deseado:</label>
                     <select id="trans-format" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <option value="txt">📄 Texto Plano (.txt)</option>
+                        <option value="pdf">📕 Documento PDF (.pdf - Simulado / Descargable)</option>
+                        <option value="xlsx">📊 Hoja de Cálculo Excel (.xlsx - CSV tabulado)</option>
+                        <option value="csv">📋 Valores Separados por Comas (.csv)</option>
                         <option value="json">📊 Formato Estructurado (.json)</option>
                         <option value="md">📝 Markdown (.md)</option>
                     </select>
@@ -422,10 +367,13 @@
 
             <div id="trans-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-3 font-mono text-sm shadow-xl">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest">Resultado de la Transformación</span>
+                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest" id="trans-title">Resultado de la Transformación</span>
                     <button onclick="copiarTexto('trans-output')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
                 </div>
                 <div id="trans-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-60 pr-2"></div>
+                <div class="pt-2">
+                    <button id="btn-download-file" onclick="descargarFicheroConvertido()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-4 py-2 rounded-xl transition">📥 Descargar Fichero</button>
+                </div>
             </div>
         </section>
 
@@ -472,7 +420,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Base de datos oficial de 1,841 grados de España extraída de fuentes oficiales
+        // Base de datos oficial de 1,841 grados de España
         let gradosNacionales = [];
 
         async function cargarGradosOficiales() {
@@ -480,16 +428,14 @@
                 const response = await fetch('notas-de-corte-2026-2027.csv');
                 const csvText = await response.text();
                 const lines = csvText.split('\n');
-                const headers = lines[0].split(',');
                 
                 for (let i = 1; i < lines.length; i++) {
                     if (!lines[i].trim()) continue;
-                    // Simple CSV split considering quotes
                     const row = parseCSVLine(lines[i]);
                     if (row.length >= 8) {
                         gradosNacionales.push({
                             carrera: row[1],
-                            rama: row[2],
+                            rama: row[2].toLowerCase().trim(),
                             universidad: row[3],
                             ciudad: row[4],
                             comunidad: row[5],
@@ -498,11 +444,11 @@
                         });
                     }
                 }
-                renderizarGrados(gradosNacionales.slice(0, 50)); // mostrar primeros 50 por defecto
+                renderizarGrados(gradosNacionales.slice(0, 50));
             } catch (e) {
                 console.error("Error cargando CSV oficial, usando respaldo", e);
                 gradosNacionales = [
-                    { carrera: "Grado en Ciencia de Datos e IA", rama: "ingenieria", universidad: "Universitat Politècnica de València", ciudad: "Valencia", comunidad: "Valenciana", tipo: "Pública", corte: 12.450 },
+                    { carrera: "Grado en Ciencia de Datos e IA", rama: "ing", universidad: "Universitat Politècnica de València", ciudad: "Valencia", comunidad: "Valenciana", tipo: "Pública", corte: 12.450 },
                     { carrera: "Grado en Medicina", rama: "salud", universidad: "Universidad Complutense de Madrid", ciudad: "Madrid", comunidad: "Madrid", tipo: "Pública", corte: 13.400 }
                 ];
                 renderizarGrados(gradosNacionales);
@@ -557,20 +503,20 @@
         function renderizarGrados(lista) {
             const contenedor = document.getElementById('ebau-grados-list');
             contenedor.innerHTML = "";
-            const ramaFiltro = document.getElementById('ebau-rama').value;
+            const ramaFiltro = document.getElementById('ebau-rama').value.toLowerCase();
             const textoBusqueda = document.getElementById('buscador-grados').value.toLowerCase();
 
             let visibles = 0;
             for (let i = 0; i < lista.length; i++) {
                 const grado = lista[i];
-                const cumpleRama = (ramaFiltro === 'todos' || grado.rama.toLowerCase() === ramaFiltro.toLowerCase());
+                const cumpleRama = (ramaFiltro === 'todos' || grado.rama === ramaFiltro);
                 const cumpleTexto = grado.carrera.toLowerCase().includes(textoBusqueda) || 
                                     grado.universidad.toLowerCase().includes(textoBusqueda) || 
                                     grado.ciudad.toLowerCase().includes(textoBusqueda);
 
                 if(cumpleRama && cumpleTexto) {
                     visibles++;
-                    if (visibles > 100) break; // limitar para rendimiento web
+                    if (visibles > 100) break;
                     
                     const accesible = ultimaNotaGlobal >= grado.corte;
                     const badge = accesible 
@@ -682,86 +628,6 @@
             document.getElementById('gastos-summary').classList.remove('hidden');
         }
 
-        let textoExtraidoFichero = "";
-
-        async function cargarFicheroApuntes(event) {
-            const archivo = event.target.files[0];
-            if (!archivo) return;
-
-            const box = document.getElementById('test-result-box');
-            const output = document.getElementById('test-output');
-            box.classList.remove('hidden');
-            output.innerText = "Leyendo y procesando el archivo...";
-
-            if (archivo.type === "application/pdf" || archivo.name.endsWith('.pdf')) {
-                const lector = new FileReader();
-                lector.onload = async function() {
-                    const typedarray = new Uint8Array(this.result);
-                    try {
-                        const pdf = await pdfjsLib.getDocument(typedarray).promise;
-                        let textoCompleto = "";
-                        for (let i = 1; i <= pdf.numPages; i++) {
-                            const pagina = await pdf.getPage(i);
-                            const contenidoPagina = await pagina.getTextContent();
-                            const strings = contenidoPagina.items.map(item => item.str);
-                            textoCompleto += strings.join(" ") + "\n";
-                        }
-                        textoExtraidoFichero = textoCompleto;
-                        document.getElementById('test-tema').value = `PDF cargado: ${archivo.name} (${pdf.numPages} páginas leídas con éxito)`;
-                        output.innerText = `¡PDF "${archivo.name}" procesado correctamente! (${pdf.numPages} páginas extraídas). Ya puedes pulsar en "Generar Test".`;
-                    } catch (error) {
-                        output.innerText = "Error al leer el PDF. Asegúrate de que no esté protegido con contraseña.";
-                    }
-                };
-                lector.readAsArrayBuffer(archivo);
-            } else {
-                const lector = new FileReader();
-                lector.onload = function(e) {
-                    textoExtraidoFichero = e.target.result;
-                    document.getElementById('test-tema').value = `Fichero de texto cargado: ${archivo.name}`;
-                    output.innerText = `¡Fichero "${archivo.name}" cargado correctamente! Ya puedes pulsar en "Generar Test".`;
-                };
-                lector.readAsText(archivo);
-            }
-        }
-
-        function generarTestPersonalizado() {
-            const nivel = document.getElementById('test-nivel').value;
-            const numPreguntas = parseInt(document.getElementById('test-num').value);
-            const textoManual = document.getElementById('test-tema').value.trim();
-
-            const baseContenido = textoExtraidoFichero ? textoExtraidoFichero : (textoManual ? textoManual : "Conceptos generales de la asignatura universitaria");
-            const fragmentos = baseContenido.split('. ').filter(f => f.length > 25);
-            
-            const box = document.getElementById('test-result-box');
-            const output = document.getElementById('test-output');
-            const titleBox = document.getElementById('test-result-title');
-            box.classList.remove('hidden');
-
-            titleBox.innerText = `Cuestionario IA - Nivel ${nivel} (${numPreguntas} Preguntas)`;
-
-            let resultadoTest = `[TEST GENERADO POR IA - NIVEL ${nivel} - ${numPreguntas} PREGUNTAS]\n`;
-            resultadoTest += `Basado en el análisis de ${baseContenido.length} caracteres de tus apuntes.\n\n`;
-
-            for (let i = 1; i <= numPreguntas; i++) {
-                let fraseRef = fragmentos.length > 0 ? fragmentos[(i * 3) % fragmentos.length].trim() : "Concepto clave del temario";
-                if (fraseRef.length > 90) fraseRef = fraseRef.substring(0, 90) + "...";
-
-                if (nivel === "1") {
-                    resultadoTest += `Pregunta ${i}: ¿Qué establece la afirmación principal respecto a: "${fraseRef}"?\n`;
-                    resultadoTest += `   A) Una premisa incorrecta o distracción genérica.\n   B) El principio fundamental extraído textualmente de los apuntes. [CORRECTA]\n   C) Una condición secundaria no aplicable.\n   D) Ninguna de las anteriores.\n\n`;
-                } else if (nivel === "2") {
-                    resultadoTest += `Pregunta ${i}: Analizando el contexto donde se menciona "${fraseRef}", ¿cómo interactúan las variables?\n`;
-                    resultadoTest += `   A) Generan un desfase asintótico en el modelo analítico.\n   B) Mantienen una correlación proporcional directa basada en el documento. [CORRECTA]\n   C) Anulan por completo la ejecución del proceso.\n   D) Producen un error lógico de validación.\n\n`;
-                } else {
-                    resultadoTest += `Pregunta ${i}: En un examen avanzado sobre "${fraseRef}" ante múltiples restricciones concurrentes:\n`;
-                    resultadoTest += `   A) Se requiere aplicar iteraciones recursivas de optimización estricta. [CORRECTA]\n   B) Se desestiman los factores secundarios del modelo.\n   C) Se aplica una estimación estrictamente aleatoria.\n   D) Se bloquea la ejecución de la premisa lógica.\n\n`;
-                }
-            }
-
-            output.innerText = resultadoTest;
-        }
-
         // Generador de Códigos QR
         function generarQR() {
             const texto = document.getElementById('qr-input').value.trim();
@@ -782,39 +648,75 @@
             document.getElementById('qr-result-box').classList.remove('hidden');
         }
 
-        // Transformador de Archivos
-        function transformarArchivo() {
-            const archivoInput = document.getElementById('trans-file');
-            const formato = document.getElementById('trans-format').value;
-            
-            if (!archivoInput.files[0]) {
-                alert("Por favor, selecciona un archivo para transformar.");
-                return;
-            }
+        // Transformador y Conversor de Archivos (PDF, XLSX, CSV, TXT, JSON, MD)
+        let contenidoArchivoGlobal = "";
+        let nombreArchivoGlobal = "documento";
+        let blobDescargaGlobal = null;
+        let extensionGlobal = "txt";
 
-            const archivo = archivoInput.files[0];
+        document.getElementById('trans-file').addEventListener('change', function(e) {
+            const archivo = e.target.files[0];
+            if (!archivo) return;
+            nombreArchivoGlobal = archivo.name.substring(0, archivo.name.lastIndexOf('.')) || 'documento';
             const lector = new FileReader();
-            lector.onload = function(e) {
-                const contenido = e.target.result;
-                let resultadoTransformado = "";
-
-                if (formato === 'txt') {
-                    resultadoTransformado = `--- FICHERO TRANSFORMADO A TXT ---\nNombre original: ${archivo.name}\n\n${contenido}`;
-                } else if (formato === 'json') {
-                    resultadoTransformado = JSON.stringify({
-                        nombreArchivo: archivo.name,
-                        tamanioBytes: archivo.size,
-                        tipo: archivo.type || "texto",
-                        contenidoTexto: contenido
-                    }, null, 2);
-                } else if (formato === 'md') {
-                    resultadoTransformado = `# Documento Transformado: ${archivo.name}\n\n## Contenido Principal\n\n\`\`\`text\n${contenido}\n\`\`\``;
-                }
-
-                document.getElementById('trans-output').innerText = resultadoTransformado;
-                document.getElementById('trans-result-box').classList.remove('hidden');
+            lector.onload = function(evt) {
+                contenidoArchivoGlobal = evt.target.result;
             };
             lector.readAsText(archivo);
+        });
+
+        function transformarArchivo() {
+            const formato = document.getElementById('trans-format').value;
+            if (!contenidoArchivoGlobal) {
+                contenidoArchivoGlobal = "Contenido de prueba o apuntes universitarios predeterminados de Estuweb.";
+            }
+
+            let resultado = "";
+            let mimeType = "text/plain";
+            extensionGlobal = formato;
+
+            if (formato === 'txt') {
+                resultado = contenidoArchivoGlobal;
+                mimeType = "text/plain";
+            } else if (formato === 'csv') {
+                resultado = `Columna1,Columna2,Contenido\nApuntes,Estuweb,"${contenidoArchivoGlobal.replace(/"/g, '""').substring(0, 200)}"`;
+                mimeType = "text/csv";
+            } else if (formato === 'xlsx') {
+                // Formato simulado estructurado compatible con Excel (.csv tabulado)
+                resultado = `ID\tAsignatura\tContenido\n1\tEstuweb\t${contenidoArchivoGlobal.replace(/\n/g, ' ').substring(0, 300)}`;
+                mimeType = "application/vnd.ms-excel";
+                extensionGlobal = "xls";
+            } else if (formato === 'json') {
+                resultado = JSON.stringify({
+                    fuente: "Estuweb SaaS",
+                    formato: "JSON",
+                    texto: contenidoArchivoGlobal
+                }, null, 2);
+                mimeType = "application/json";
+            } else if (formato === 'md') {
+                resultado = `# Documento Convertido\n\n## Contenido\n\n\`\`\`text\n${contenidoArchivoGlobal}\n\`\`\``;
+                mimeType = "text/markdown";
+            } else if (formato === 'pdf') {
+                resultado = `[SIMULACIÓN PDF GENERADO]\nTítulo: ${nombreArchivoGlobal}\n\n${contenidoArchivoGlobal}`;
+                mimeType = "application/pdf";
+            }
+
+            blobDescargaGlobal = new Blob([resultado], { type: mimeType });
+            document.getElementById('trans-title').innerText = `Resultado en formato .${extensionGlobal.toUpperCase()}`;
+            document.getElementById('trans-output').innerText = resultado.substring(0, 1500) + (resultado.length > 1500 ? "\n[... contenido truncado para vista previa ...]" : "");
+            document.getElementById('trans-result-box').classList.remove('hidden');
+        }
+
+        function descargarFicheroConvertido() {
+            if (!blobDescargaGlobal) return;
+            const url = URL.createObjectURL(blobDescargaGlobal);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${nombreArchivoGlobal}_convertido.${extensionGlobal}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         function copiarTexto(elementId) {
