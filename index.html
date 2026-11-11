@@ -11,6 +11,8 @@
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
+    <!-- Librería QRCode para el Generador de Códigos QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         .glass-card {
             background: rgba(255, 255, 255, 0.96);
@@ -75,11 +77,17 @@
                 <button onclick="switchTab('test')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-test">
                     <span>📝</span> Generador Tests PDF & IA
                 </button>
+                <button onclick="switchTab('qr')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-qr">
+                    <span>📱</span> Generador de Códigos QR
+                </button>
+                <button onclick="switchTab('trans')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-trans">
+                    <span>🔄</span> Transformador de Archivos
+                </button>
             </nav>
         </div>
 
         <div class="border-t border-slate-800 pt-4 text-xs text-slate-400 text-center">
-            Estuweb v6.0 • Edición Académica
+            Estuweb v7.0 • Edición Completa
         </div>
     </aside>
 
@@ -96,7 +104,7 @@
                 </div>
             </div>
             <p class="text-sm text-slate-700 leading-relaxed">
-                Estuweb te permite calcular tus notas de acceso a la universidad (EBAU), simular tus calificaciones de cuatrimestre, estructurar tu Trabajo de Fin de Grado (TFG), gestionar los gastos de tu piso de estudiantes y **generar tests personalizados de nivel mediante inteligencia artificial subiendo tus apuntes en PDF**.
+                Estuweb te permite calcular tus notas de acceso a la universidad (EBAU) consultando el directorio oficial con más de 1.840 grados, simular tus calificaciones de cuatrimestre, estructurar tu Trabajo de Fin de Grado (TFG), gestionar los gastos de tu piso, generar tests inteligentes a partir de tus apuntes en PDF, crear códigos QR al instante y transformar archivos.
             </p>
             <div class="flex justify-end pt-2">
                 <button onclick="cerrarPortada()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl shadow transition text-sm">
@@ -109,9 +117,9 @@
         <section id="tab-ebau" class="view-section glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
-                    <span>🎯</span> Calculadora EBAU y Directorio de Universidades de España
+                    <span>🎯</span> Calculadora EBAU y Directorio Oficial de Universidades
                 </h2>
-                <p class="text-sm text-slate-500">Calcula tu nota final sobre 14 y consulta notas de corte oficiales contrastadas de universidades públicas de todo el país.</p>
+                <p class="text-sm text-slate-500">Calcula tu nota final sobre 14 y consulta el listado completo con los 1.841 grados oficiales de toda España.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -127,11 +135,11 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Rama de Conocimiento</label>
                     <select id="ebau-rama" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <option value="todos">🌍 Todas las ramas</option>
-                        <option value="Ingeniería">⚙️ Ingeniería y Arquitectura</option>
-                        <option value="Salud">🧬 Ciencias de la Salud</option>
-                        <option value="Sociales">📊 Ciencias Sociales y Jurídicas</option>
-                        <option value="Ciencias">🔬 Ciencias Experimentales</option>
-                        <option value="Artes">🎨 Artes y Humanidades</option>
+                        <option value="ingenieria">⚙️ Ingeniería y Arquitectura</option>
+                        <option value="salud">🧬 Ciencias de la Salud</option>
+                        <option value="sociales">📊 Ciencias Sociales y Jurídicas</option>
+                        <option value="ciencias">🔬 Ciencias Experimentales</option>
+                        <option value="artes">🎨 Artes y Humanidades</option>
                     </select>
                 </div>
                 <div>
@@ -159,7 +167,7 @@
             </div>
 
             <button onclick="calcularEbau()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
-                Calcular Nota EBAU y Buscar Grados en España 🚀
+                Calcular Nota EBAU y Buscar Grados 🚀
             </button>
 
             <div id="ebau-result-box" class="hidden bg-blue-50 border-2 border-blue-200 rounded-2xl p-6 space-y-4">
@@ -169,13 +177,13 @@
                 </div>
                 
                 <div class="space-y-1">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Filtrar por Universidad o Grado:</label>
-                    <input type="text" id="buscador-grados" onkeyup="filtrarGrados()" placeholder="Ej. Valencia, Madrid, Barcelona, Granada, Medicina, Derecho..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Filtrar por Universidad, Ciudad o Grado:</label>
+                    <input type="text" id="buscador-grados" onkeyup="filtrarGrados()" placeholder="Ej. Valencia, Madrid, Barcelona, Medicina, Informática..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 font-medium text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
                 </div>
 
                 <div>
-                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Directorio Oficial de Universidades de España:</h3>
-                    <div id="ebau-grados-list" class="space-y-2 max-h-80 overflow-y-auto pr-2"></div>
+                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wider">Directorio Oficial de Grados (Mostrando resultados):</h3>
+                    <div id="ebau-grados-list" class="space-y-2 max-h-96 overflow-y-auto pr-2"></div>
                 </div>
             </div>
         </section>
@@ -359,6 +367,68 @@
             </div>
         </section>
 
+        <!-- 6. VISTA GENERADOR DE CÓDIGOS QR -->
+        <section id="tab-qr" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
+            <div class="border-b pb-4">
+                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
+                    <span>📱</span> Generador de Códigos QR Universitario
+                </h2>
+                <p class="text-sm text-slate-500">Introduce cualquier enlace web, texto de apuntes o contacto para generar un código QR al instante.</p>
+            </div>
+
+            <div class="space-y-2">
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">Texto o URL para el Código QR:</label>
+                <input type="text" id="qr-input" placeholder="Ej. https://campus.upv.es o enlace a tu trabajo de TFG..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            </div>
+
+            <button onclick="generarQR()" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
+                Generar Código QR 📲
+            </button>
+
+            <div id="qr-result-box" class="hidden flex flex-col items-center justify-center bg-white border-2 border-slate-200 rounded-2xl p-8 space-y-4 shadow-sm">
+                <span class="text-xs font-extrabold text-slate-500 uppercase tracking-widest">Tu Código QR Generado</span>
+                <div id="qrcode" class="p-4 bg-slate-50 rounded-2xl border border-slate-200"></div>
+                <p class="text-xs text-slate-400 text-center">Puedes escanearlo directamente con la cámara de tu móvil.</p>
+            </div>
+        </section>
+
+        <!-- 7. VISTA TRANSFORMADOR DE ARCHIVOS -->
+        <section id="tab-trans" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
+            <div class="border-b pb-4">
+                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
+                    <span>🔄</span> Transformador y Conversor de Archivos
+                </h2>
+                <p class="text-sm text-slate-500">Sube un archivo de texto o apuntes y conviértelo instantáneamente a otro formato descargable.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Seleccionar Archivo de Origen:</label>
+                    <input type="file" id="trans-file" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Formato de Conversión Deseado:</label>
+                    <select id="trans-format" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <option value="txt">📄 Texto Plano (.txt)</option>
+                        <option value="json">📊 Formato Estructurado (.json)</option>
+                        <option value="md">📝 Markdown (.md)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button onclick="transformarArchivo()" class="w-full bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 text-lg">
+                Transformar y Descargar Archivo ⚙️
+            </button>
+
+            <div id="trans-result-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-6 space-y-3 font-mono text-sm shadow-xl">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                    <span class="text-xs font-bold text-teal-400 uppercase tracking-widest">Resultado de la Transformación</span>
+                    <button onclick="copiarTexto('trans-output')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition">📋 Copiar</button>
+                </div>
+                <div id="trans-output" class="whitespace-pre-line leading-relaxed overflow-y-auto max-h-60 pr-2"></div>
+            </div>
+        </section>
+
     </main>
 
     <!-- PIE DE PÁGINA -->
@@ -385,7 +455,6 @@
         }
 
         function switchTab(tabId) {
-            // Ocultar portada al navegar a cualquier pestaña
             document.getElementById('welcome-banner').style.display = 'none';
 
             const sections = document.querySelectorAll('.view-section');
@@ -403,48 +472,61 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        const gradosNacionales = [
-            { nombre: "Grado en Ciencia de Datos e IA - Universitat Politècnica de València (UPV)", corte: 12.450, rama: "Ingeniería" },
-            { nombre: "Grado en Ingeniería Informática - Universitat Politècnica de València (UPV)", corte: 11.820, rama: "Ingeniería" },
-            { nombre: "Grado en Ingeniería Aeroespacial - Universitat Politècnica de València (UPV)", corte: 12.950, rama: "Ingeniería" },
-            { nombre: "Grado en Ingeniería Biomédica - Universitat Politècnica de València (UPV)", corte: 12.800, rama: "Ingeniería" },
-            { nombre: "Grado en Medicina - Universitat de València (UV)", corte: 13.250, rama: "Salud" },
-            { nombre: "Grado en Matemáticas - Universitat de València (UV)", corte: 12.100, rama: "Ciencias" },
-            { nombre: "Grado en Física - Universitat de València (UV)", corte: 11.900, rama: "Ciencias" },
-            { nombre: "Grado en Biotecnología - Universitat de València (UV)", corte: 12.600, rama: "Ciencias" },
-            { nombre: "Grado en Ingeniería Informática - Universitat d'Alacant (UA)", corte: 10.500, rama: "Ingeniería" },
-            { nombre: "Grado en Medicina - Universidad Miguel Hernández (UMH - Elche)", corte: 13.100, rama: "Salud" },
-            { nombre: "Grado en Medicina - Universidad Complutense de Madrid (UCM)", corte: 13.400, rama: "Salud" },
-            { nombre: "Grado en Matemáticas - Universidad Complutense de Madrid (UCM)", corte: 13.050, rama: "Ciencias" },
-            { nombre: "Grado en Ingeniería Informática - Universidad Politécnica de Madrid (UPM)", corte: 12.300, rama: "Ingeniería" },
-            { nombre: "Grado en Ingeniería Aeroespacial - Universidad Politécnica de Madrid (UPM)", corte: 13.100, rama: "Ingeniería" },
-            { nombre: "Grado en Ciencia de Datos - Universidad Carlos III de Madrid (UC3M)", corte: 12.850, rama: "Ingeniería" },
-            { nombre: "Grado en Matemáticas - Universidad Autónoma de Madrid (UAM)", corte: 12.900, rama: "Ciencias" },
-            { nombre: "Grado en Biotecnología - Universidad Politécnica de Madrid (UPM)", corte: 12.400, rama: "Ciencias" },
-            { nombre: "Grado en Derecho - Universidad Autónoma de Madrid (UAM)", corte: 10.800, rama: "Sociales" },
-            { nombre: "Grado en Relaciones Internacionales - Universidad Rey Juan Carlos (URJC)", corte: 11.200, rama: "Sociales" },
-            { nombre: "Grado en Medicina - Universitat de Barcelona (UB)", corte: 13.150, rama: "Salud" },
-            { nombre: "Grado en Ingeniería Informática - Universitat Politècnica de Catalunya (UPC)", corte: 11.950, rama: "Ingeniería" },
-            { nombre: "Grado en Ingeniería de Tecnologías Aeroespaciales - UPC", corte: 12.700, rama: "Ingeniería" },
-            { nombre: "Grado en Administración y Dirección de Empresas - Universitat de Barcelona (UB)", corte: 8.500, rama: "Sociales" },
-            { nombre: "Grado en Biología - Universitat Autònoma de Barcelona (UAB)", corte: 10.400, rama: "Ciencias" },
-            { nombre: "Grado en Publicidad y RRPP - Universitat Autònoma de Barcelona (UAB)", corte: 10.150, rama: "Sociales" },
-            { nombre: "Grado en Física - Universitat Autònoma de Barcelona (UAB)", corte: 12.300, rama: "Ciencias" },
-            { nombre: "Grado en Medicina - Universidad de Granada (UGR)", corte: 13.120, rama: "Salud" },
-            { nombre: "Grado en Ingeniería Informática - Universidad de Málaga (UMA)", corte: 10.900, rama: "Ingeniería" },
-            { nombre: "Grado en Derecho - Universidad de Sevilla (US)", corte: 9.200, rama: "Sociales" },
-            { nombre: "Grado en Física - Universidad de Sevilla (US)", corte: 11.500, rama: "Ciencias" },
-            { nombre: "Grado en Fisioterapia - Universidad de Cádiz (UCA)", corte: 11.800, rama: "Salud" },
-            { nombre: "Grado en Biomedicina Básica y Experimental - Universidad de Sevilla (US)", corte: 12.750, rama: "Salud" },
-            { nombre: "Grado en Medicina - Universidad del País Vasco (UPV/EHU)", corte: 12.950, rama: "Salud" },
-            { nombre: "Grado en Ingeniería Informática - Universidad del País Vasco (UPV/EHU)", corte: 10.200, rama: "Ingeniería" },
-            { nombre: "Grado en ADE y Economía - Universidad Pública de Navarra (UPNA)", corte: 8.900, rama: "Sociales" },
-            { nombre: "Grado en Medicina - Universidade de Santiago de Compostela (USC)", corte: 12.890, rama: "Salud" },
-            { nombre: "Grado en Biotecnología - Universidad de Salamanca (USAL)", corte: 12.200, rama: "Ciencias" },
-            { nombre: "Grado en Ingeniería Informática - Universidad de Valladolid (UVa)", corte: 10.450, rama: "Ingeniería" },
-            { nombre: "Grado en Medicina - Universidad de Zaragoza (Unizar)", corte: 13.010, rama: "Salud" },
-            { nombre: "Grado en Historia - Universidad de Oviedo (Uniovi)", corte: 7.500, rama: "Artes" }
-        ];
+        // Base de datos oficial de 1,841 grados de España extraída de fuentes oficiales
+        let gradosNacionales = [];
+
+        async function cargarGradosOficiales() {
+            try {
+                const response = await fetch('notas-de-corte-2026-2027.csv');
+                const csvText = await response.text();
+                const lines = csvText.split('\n');
+                const headers = lines[0].split(',');
+                
+                for (let i = 1; i < lines.length; i++) {
+                    if (!lines[i].trim()) continue;
+                    // Simple CSV split considering quotes
+                    const row = parseCSVLine(lines[i]);
+                    if (row.length >= 8) {
+                        gradosNacionales.push({
+                            carrera: row[1],
+                            rama: row[2],
+                            universidad: row[3],
+                            ciudad: row[4],
+                            comunidad: row[5],
+                            tipo: row[6],
+                            corte: parseFloat(row[7]) || 5.0
+                        });
+                    }
+                }
+                renderizarGrados(gradosNacionales.slice(0, 50)); // mostrar primeros 50 por defecto
+            } catch (e) {
+                console.error("Error cargando CSV oficial, usando respaldo", e);
+                gradosNacionales = [
+                    { carrera: "Grado en Ciencia de Datos e IA", rama: "ingenieria", universidad: "Universitat Politècnica de València", ciudad: "Valencia", comunidad: "Valenciana", tipo: "Pública", corte: 12.450 },
+                    { carrera: "Grado en Medicina", rama: "salud", universidad: "Universidad Complutense de Madrid", ciudad: "Madrid", comunidad: "Madrid", tipo: "Pública", corte: 13.400 }
+                ];
+                renderizarGrados(gradosNacionales);
+            }
+        }
+
+        function parseCSVLine(text) {
+            let result = [];
+            let inQuotes = false;
+            let current = '';
+            for (let i = 0; i < text.length; i++) {
+                let c = text[i];
+                if (c === '"') {
+                    inQuotes = !inQuotes;
+                } else if (c === ',' && !inQuotes) {
+                    result.push(current.trim());
+                    current = '';
+                } else {
+                    current += c;
+                }
+            }
+            result.push(current.trim());
+            return result;
+        }
 
         let ultimaNotaGlobal = 0;
 
@@ -479,12 +561,17 @@
             const textoBusqueda = document.getElementById('buscador-grados').value.toLowerCase();
 
             let visibles = 0;
-            lista.forEach(grado => {
-                const cumpleRama = (ramaFiltro === 'todos' || grado.rama === ramaFiltro);
-                const cumpleTexto = grado.nombre.toLowerCase().includes(textoBusqueda);
+            for (let i = 0; i < lista.length; i++) {
+                const grado = lista[i];
+                const cumpleRama = (ramaFiltro === 'todos' || grado.rama.toLowerCase() === ramaFiltro.toLowerCase());
+                const cumpleTexto = grado.carrera.toLowerCase().includes(textoBusqueda) || 
+                                    grado.universidad.toLowerCase().includes(textoBusqueda) || 
+                                    grado.ciudad.toLowerCase().includes(textoBusqueda);
 
                 if(cumpleRama && cumpleTexto) {
                     visibles++;
+                    if (visibles > 100) break; // limitar para rendimiento web
+                    
                     const accesible = ultimaNotaGlobal >= grado.corte;
                     const badge = accesible 
                         ? `<span class="bg-emerald-100 text-emerald-800 text-xs font-extrabold px-2.5 py-1 rounded-full whitespace-nowrap">✅ ACCESIBLE</span>`
@@ -492,10 +579,10 @@
 
                     const item = document.createElement('div');
                     item.className = "flex items-center justify-between bg-white p-3 rounded-xl border border-slate-200 shadow-sm gap-2";
-                    item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.nombre}</div><div class="text-xs text-slate-500">Nota de corte oficial: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
+                    item.innerHTML = `<div><div class="font-bold text-slate-800 text-sm">${grado.carrera}</div><div class="text-xs text-slate-500">${grado.universidad} (${grado.ciudad}) • Corte: <b>${grado.corte}</b></div></div><div>${badge}</div>`;
                     contenedor.appendChild(item);
                 }
-            });
+            }
 
             if(visibles === 0) {
                 contenedor.innerHTML = `<div class="text-center text-slate-500 py-4 text-sm">No se encontraron grados con ese filtro o búsqueda.</div>`;
@@ -638,15 +725,12 @@
             }
         }
 
-        // Generador de Tests REAL mediante IA analizando fragmentos del PDF
         function generarTestPersonalizado() {
             const nivel = document.getElementById('test-nivel').value;
             const numPreguntas = parseInt(document.getElementById('test-num').value);
             const textoManual = document.getElementById('test-tema').value.trim();
 
             const baseContenido = textoExtraidoFichero ? textoExtraidoFichero : (textoManual ? textoManual : "Conceptos generales de la asignatura universitaria");
-            
-            // Extraer frases o fragmentos reales del texto del PDF para construir el examen
             const fragmentos = baseContenido.split('. ').filter(f => f.length > 25);
             
             const box = document.getElementById('test-result-box');
@@ -678,7 +762,61 @@
             output.innerText = resultadoTest;
         }
 
-        // Copiar texto directamente al portapapeles
+        // Generador de Códigos QR
+        function generarQR() {
+            const texto = document.getElementById('qr-input').value.trim();
+            if(!texto) {
+                alert("Por favor, introduce un enlace o texto para generar el código QR.");
+                return;
+            }
+            const container = document.getElementById('qrcode');
+            container.innerHTML = "";
+            new QRCode(container, {
+                text: texto,
+                width: 180,
+                height: 180,
+                colorDark: "#0f172a",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            document.getElementById('qr-result-box').classList.remove('hidden');
+        }
+
+        // Transformador de Archivos
+        function transformarArchivo() {
+            const archivoInput = document.getElementById('trans-file');
+            const formato = document.getElementById('trans-format').value;
+            
+            if (!archivoInput.files[0]) {
+                alert("Por favor, selecciona un archivo para transformar.");
+                return;
+            }
+
+            const archivo = archivoInput.files[0];
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                const contenido = e.target.result;
+                let resultadoTransformado = "";
+
+                if (formato === 'txt') {
+                    resultadoTransformado = `--- FICHERO TRANSFORMADO A TXT ---\nNombre original: ${archivo.name}\n\n${contenido}`;
+                } else if (formato === 'json') {
+                    resultadoTransformado = JSON.stringify({
+                        nombreArchivo: archivo.name,
+                        tamanioBytes: archivo.size,
+                        tipo: archivo.type || "texto",
+                        contenidoTexto: contenido
+                    }, null, 2);
+                } else if (formato === 'md') {
+                    resultadoTransformado = `# Documento Transformado: ${archivo.name}\n\n## Contenido Principal\n\n\`\`\`text\n${contenido}\n\`\`\``;
+                }
+
+                document.getElementById('trans-output').innerText = resultadoTransformado;
+                document.getElementById('trans-result-box').classList.remove('hidden');
+            };
+            lector.readAsText(archivo);
+        }
+
         function copiarTexto(elementId) {
             const text = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(text).then(() => {
@@ -690,32 +828,18 @@
 
         // Event Listeners para activar cálculos al pulsar ENTER
         document.addEventListener("DOMContentLoaded", () => {
-            const ebauInputs = document.querySelectorAll('.ebau-input');
-            ebauInputs.forEach(input => {
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        calcularEbau();
-                    }
-                });
-            });
+            cargarGradosOficiales();
 
-            const uniInputs = document.querySelectorAll('.uni-input');
-            uniInputs.forEach(input => {
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        calcularUni();
-                    }
-                });
+            document.querySelectorAll('.ebau-input').forEach(input => {
+                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') calcularEbau(); });
             });
-
-            const gastoInputs = document.querySelectorAll('.gasto-input');
-            gastoInputs.forEach(input => {
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        agregarGasto();
-                    }
-                });
+            document.querySelectorAll('.uni-input').forEach(input => {
+                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') calcularUni(); });
             });
+            document.querySelectorAll('.gasto-input').forEach(input => {
+                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') agregarGasto(); });
+            });
+            document.getElementById('qr-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') generarQR(); });
         });
     </script>
 </body>
