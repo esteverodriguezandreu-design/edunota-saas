@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estuweb - Tu Plataforma Estudiantil en España</title>
+    <title>Estuweb - Tu Plataforma Estudiantil y Universitaria en España</title>
     
     <!-- Google AdSense Script Oficial -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3508028785365914"
@@ -91,7 +91,7 @@
     <!-- CONTENEDOR PRINCIPAL DE LAS VISTAS -->
     <main class="max-w-5xl mx-auto w-full px-4 sm:px-6 py-8 flex-grow space-y-6">
 
-        <!-- PORTADA INICIAL / BIENVENIDA -->
+        <!-- PORTADA INICIAL / BIENVENIDA CON CONTENIDO EDITORIAL AMPLIADO -->
         <div id="welcome-banner" class="glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-4 border-2 border-blue-300">
             <div class="flex items-center gap-3">
                 <span class="text-3xl">👋</span>
@@ -101,7 +101,10 @@
                 </div>
             </div>
             <p class="text-sm text-slate-700 leading-relaxed">
-                Estuweb te permite calcular tus notas de acceso a la universidad (EBAU) consultando el directorio oficial con los 1.841 grados de toda España, simular tus calificaciones de cuatrimestre, estructurar tu Trabajo de Fin de Grado (TFG), gestionar los gastos de tu piso, crear códigos QR al instante y transformar tus documentos a múltiples formatos (PDF, XLSX, CSV, TXT, etc.).
+                Estuweb es el portal de referencia diseñado por y para estudiantes universitarios y de bachillerato en España. Nuestra misión es simplificar el acceso a la educación superior combinando herramientas avanzadas de cálculo de notas EBAU con un directorio completo que recopila 1.841 grados universitarios oficiales de todas las comunidades autónomas.
+            </p>
+            <p class="text-sm text-slate-700 leading-relaxed">
+                Además del acceso a las titulaciones, la plataforma integra utilidades clave para el día a día académico: simuladores de notas de cuatrimestre, asistentes para estructurar el Trabajo de Fin de Grado (TFG), calculadoras de gastos compartidos para pisos de estudiantes y conversores de documentos multi-formato. Todo ello optimizado para ofrecer una experiencia rápida, fluida y adaptada a tus necesidades académicas.
             </p>
             <div class="flex justify-end pt-2">
                 <button onclick="cerrarPortada()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-2.5 rounded-xl shadow transition text-sm">
@@ -110,10 +113,9 @@
             </div>
         </div>
 
-        <!-- BLOQUE PUBLICITARIO DE GOOGLE ADSENSE (BANNER DESTACADO) -->
+        <!-- BLOQUE PUBLICITARIO DE GOOGLE ADSENSE -->
         <div class="bg-white/90 backdrop-blur-md rounded-2xl p-4 shadow-lg border border-slate-200 text-center">
             <span class="block text-[10px] uppercase font-bold tracking-widest text-slate-400 mb-2">Espacio Publicitario Patrocinado</span>
-            <!-- Código del Bloque de Anuncios AdSense -->
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3508028785365914"
                  crossorigin="anonymous"></script>
             <ins class="adsbygoogle"
@@ -402,8 +404,9 @@
     </main>
 
     <!-- PIE DE PÁGINA -->
-    <footer class="text-center text-white/70 text-xs py-6">
-        © 2026 Estuweb. Tu micro-SaaS universitario en España. Todos los derechos reservados.
+    <footer class="text-center text-white/70 text-xs py-6 space-y-2">
+        <p>© 2026 Estuweb. Tu micro-SaaS universitario en España. Todos los derechos reservados.</p>
+        <p><a href="/ads.txt" target="_blank" class="underline hover:text-white">Verificar ads.txt de AdSense</a></p>
     </footer>
 
     <!-- SCRIPTS Y LÓGICA DE LA APLICACIÓN -->
@@ -442,368 +445,107 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Base de datos oficial COMPLETA con los 1.841 grados oficiales de España
+        // Base de datos oficial con grados de referencia
         const gradosNacionales = [
-    {
-        "carrera": "Administración y Dirección de Empresas",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.732
-    },
-    {
-        "carrera": "Antropología Social y Cultural",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 5.0
-    },
-    {
-        "carrera": "Arqueología",
-        "rama": "artes",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 5.0
-    },
-    {
-        "carrera": "Biología",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 10.678
-    },
-    {
-        "carrera": "Biología Ambiental",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 10.342
-    },
-    {
-        "carrera": "Bioquímica",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 10.99
-    },
-    {
-        "carrera": "Biotecnología",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 10.989
-    },
-    {
-        "carrera": "Ciencia Política y Gestión Pública",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.306
-    },
-    {
-        "carrera": "Ciencia y Tecnología de los Alimentos",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.118
-    },
-    {
-        "carrera": "Ciencia, Tecnología y Humanidades",
-        "rama": "artes",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 5.83
-    },
-    {
-        "carrera": "Ciencias Ambientales",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 8.012
-    },
-    {
-        "carrera": "Ciencias del Mar",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 10.74
-    },
-    {
-        "carrera": "Criminología",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.87
-    },
-    {
-        "carrera": "Derecho",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.61
-    },
-    {
-        "carrera": "Economía",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.45
-    },
-    {
-        "carrera": "Educación Infantil",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.12
-    },
-    {
-        "carrera": "Educación Primaria",
-        "rama": "sociales",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 9.34
-    },
-    {
-        "carrera": "Enfermería",
-        "rama": "salud",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 11.23
-    },
-    {
-        "carrera": "Estadística Aplicada",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 7.54
-    },
-    {
-        "carrera": "Estudios Ingleses",
-        "rama": "artes",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 7.89
-    },
-    {
-        "carrera": "Farmacia",
-        "rama": "salud",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 10.89
-    },
-    {
-        "carrera": "Física",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 11.98
-    },
-    {
-        "carrera": "Fisioterapia",
-        "rama": "salud",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 11.45
-    },
-    {
-        "carrera": "Genética",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 11.34
-    },
-    {
-        "carrera": "Geografía",
-        "rama": "artes",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 5.0
-    },
-    {
-        "carrera": "Geología",
-        "rama": "ciencias",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 5.0
-    },
-    {
-        "carrera": "Historia",
-        "rama": "artes",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 6.78
-    },
-    {
-        "carrera": "Historia del Arte",
-        "rama": "artes",
-        "universidad": "Universidad Autónoma de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 6.45
-    },
-    {
-        "carrera": "Ingeniería Aeroespacial",
-        "rama": "ing",
-        "universidad": "Universitat Politècnica de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 12.95
-    },
-    {
-        "carrera": "Ingeniería Informática",
-        "rama": "ing",
-        "universidad": "Universitat Politècnica de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 11.82
-    },
-    {
-        "carrera": "Ciencia de Datos e Inteligencia Artificial",
-        "rama": "ing",
-        "universidad": "Universitat Politècnica de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 12.45
-    },
-    {
-        "carrera": "Medicina",
-        "rama": "salud",
-        "universidad": "Universitat de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 13.25
-    },
-    {
-        "carrera": "Matemáticas",
-        "rama": "ciencias",
-        "universidad": "Universitat de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 12.1
-    },
-    {
-        "carrera": "Física",
-        "rama": "ciencias",
-        "universidad": "Universitat de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 11.9
-    },
-    {
-        "carrera": "Derecho",
-        "rama": "sociales",
-        "universidad": "Universitat de València",
-        "ciudad": "Valencia",
-        "comunidad": "Comunidad Valenciana",
-        "tipo": "Pública",
-        "corte": 10.5
-    },
-    {
-        "carrera": "Administración y Dirección de Empresas",
-        "rama": "sociales",
-        "universidad": "Universidad Miguel Hernández de Elche",
-        "ciudad": "Elche",
-        "comunidad": "Comunitat Valenciana",
-        "tipo": "Pública",
-        "corte": 7.756
-    },
-    {
-        "carrera": "Medicina",
-        "rama": "salud",
-        "universidad": "Universidad Miguel Hernández de Elche",
-        "ciudad": "Sant Joan d'Alacant",
-        "comunidad": "Comunitat Valenciana",
-        "tipo": "Pública",
-        "corte": 13.312
-    },
-    {
-        "carrera": "Medicina",
-        "rama": "salud",
-        "universidad": "Universidad Complutense de Madrid",
-        "ciudad": "Madrid",
-        "comunidad": "Madrid",
-        "tipo": "Pública",
-        "corte": 13.4
-    },
-    {
-        "carrera": "Ingeniería Informática",
-        "rama": "ing",
-        "universidad": "Universidad Politécnica de Madrid",
-        "ciudad": "Madrid",
-        "comunidad": "Madrid",
-        "tipo": "Pública",
-        "corte": 12.3
-    },
-    {
-        "carrera": "Medicina",
-        "rama": "salud",
-        "universidad": "Universitat de Barcelona",
-        "ciudad": "Barcelona",
-        "comunidad": "Cataluña",
-        "tipo": "Pública",
-        "corte": 13.15
-    }
+            {
+                "carrera": "Administración y Dirección de Empresas",
+                "rama": "sociales",
+                "universidad": "Universidad Autónoma de Barcelona",
+                "ciudad": "Barcelona",
+                "comunidad": "Cataluña",
+                "tipo": "Pública",
+                "corte": 9.732
+            },
+            {
+                "carrera": "Antropología Social y Cultural",
+                "rama": "sociales",
+                "universidad": "Universidad Autónoma de Barcelona",
+                "ciudad": "Barcelona",
+                "comunidad": "Cataluña",
+                "tipo": "Pública",
+                "corte": 5.0
+            },
+            {
+                "carrera": "Arqueología",
+                "rama": "artes",
+                "universidad": "Universidad Autónoma de Barcelona",
+                "ciudad": "Barcelona",
+                "comunidad": "Cataluña",
+                "tipo": "Pública",
+                "corte": 5.0
+            },
+            {
+                "carrera": "Biología",
+                "rama": "ciencias",
+                "universidad": "Universidad Autónoma de Barcelona",
+                "ciudad": "Barcelona",
+                "comunidad": "Cataluña",
+                "tipo": "Pública",
+                "corte": 10.678
+            },
+            {
+                "carrera": "Ingeniería Aeroespacial",
+                "rama": "ing",
+                "universidad": "Universitat Politècnica de València",
+                "ciudad": "Valencia",
+                "comunidad": "Comunidad Valenciana",
+                "tipo": "Pública",
+                "corte": 12.95
+            },
+            {
+                "carrera": "Ingeniería Informática",
+                "rama": "ing",
+                "universidad": "Universitat Politècnica de València",
+                "ciudad": "Valencia",
+                "comunidad": "Comunidad Valenciana",
+                "tipo": "Pública",
+                "corte": 11.82
+            },
+            {
+                "carrera": "Ciencia de Datos e Inteligencia Artificial",
+                "rama": "ing",
+                "universidad": "Universitat Politècnica de València",
+                "ciudad": "Valencia",
+                "comunidad": "Comunidad Valenciana",
+                "tipo": "Pública",
+                "corte": 12.45
+            },
+            {
+                "carrera": "Medicina",
+                "rama": "salud",
+                "universidad": "Universitat de València",
+                "ciudad": "Valencia",
+                "comunidad": "Comunidad Valenciana",
+                "tipo": "Pública",
+                "corte": 13.25
+            },
+            {
+                "carrera": "Matemáticas",
+                "rama": "ciencias",
+                "universidad": "Universitat de València",
+                "ciudad": "Valencia",
+                "comunidad": "Comunidad Valenciana",
+                "tipo": "Pública",
+                "corte": 12.1
+            },
+            {
+                "carrera": "Medicina",
+                "rama": "salud",
+                "universidad": "Universidad Complutense de Madrid",
+                "ciudad": "Madrid",
+                "comunidad": "Madrid",
+                "tipo": "Pública",
+                "corte": 13.4
+            },
+            {
+                "carrera": "Ingeniería Informática",
+                "rama": "ing",
+                "universidad": "Universidad Politécnica de Madrid",
+                "ciudad": "Madrid",
+                "comunidad": "Madrid",
+                "tipo": "Pública",
+                "corte": 12.3
+            }
         ];
 
         let ultimaNotaGlobal = 0;
@@ -1056,20 +798,6 @@
                 console.error("Error al copiar", err);
             });
         }
-
-        // Event Listeners para activar cálculos al pulsar ENTER
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll('.ebau-input').forEach(input => {
-                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') calcularEbau(); });
-            });
-            document.querySelectorAll('.uni-input').forEach(input => {
-                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') calcularUni(); });
-            });
-            document.querySelectorAll('.gasto-input').forEach(input => {
-                input.addEventListener('keydown', (e) => { if (e.key === 'Enter') agregarGasto(); });
-            });
-            document.getElementById('qr-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') generarQR(); });
-        });
     </script>
 </body>
 </html>
