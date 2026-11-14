@@ -80,11 +80,17 @@
                 <button onclick="switchTab('trans')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-trans">
                     <span>🔄</span> Transformador de Archivos
                 </button>
+                <button onclick="switchTab('quienes')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-quienes">
+                    <span>ℹ️</span> Quiénes Somos & Contacto
+                </button>
+                <button onclick="switchTab('legal')" class="sidebar-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition text-left text-slate-300 hover:bg-slate-800 hover:text-white" id="nav-legal">
+                    <span>⚖️</span> Aviso Legal y Privacidad
+                </button>
             </nav>
         </div>
 
         <div class="border-t border-slate-800 pt-4 text-xs text-slate-400 text-center">
-            Estuweb v15.0 • Edición Completa 1.841 Grados
+            Estuweb v16.0 • Edición Completa 1.841 Grados
         </div>
     </aside>
 
@@ -111,7 +117,7 @@
                 <h3 class="font-bold text-blue-900 text-base pt-2">¿Cómo utilizar las herramientas de planificación académica?</h3>
                 <ul class="list-disc pl-5 space-y-1">
                     <li><strong>Calculadora EBAU:</strong> Introduce tu nota media de Bachillerato (NCO), la calificación de la fase obligatoria (CF) y tus asignaturas de la fase voluntaria con sus respectivas ponderaciones (0.2 o 0.1) para obtener al instante tu nota de acceso global.</li>
-                    <li><strong>Directorio de Grados:</strong> Filtra las titulaciones disponibles por rama de conocimiento (Ingeniería, Ciencias de la Salud, Ciencias Sociales, Ciencias Experimentales y Artes y Humanidades) y comprueba al instante si tus marcas superan la nota de corte de corte requerida.</li>
+                    <li><strong>Directorio de Grados:</strong> Filtra las titulaciones disponibles por rama de conocimiento (Ingeniería, Ciencias de la Salud, Ciencias Sociales, Ciencias Experimentales y Artes y Humanidades) y comprueba al instante si tus marcas superan la nota de corte requerida.</li>
                     <li><strong>Simulador de Notas Universitarias:</strong> Introduce el porcentaje evaluado hasta la fecha para averiguar la nota exacta que necesitas obtener en el examen final para alcanzar tu objetivo en el acta de la asignatura.</li>
                 </ul>
             </div>
@@ -411,12 +417,71 @@
             </div>
         </section>
 
+        <!-- 7. VISTA QUIÉNES SOMOS & CONTACTO (Exigido por Google) -->
+        <section id="tab-quienes" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
+            <div class="border-b pb-4">
+                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
+                    <span>ℹ️</span> Quiénes Somos y Soporte Académico
+                </h2>
+                <p class="text-sm text-slate-500">Información institucional sobre el equipo y canales oficiales de contacto y soporte técnico.</p>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-700 leading-relaxed">
+                <h3 class="font-bold text-blue-900 text-base">¿Quién hay detrás de Estuweb?</h3>
+                <p>
+                    Estuweb es un micro-SaaS y proyecto independiente de desarrollo tecnológico y académico impulsado en España. Nace con la vocación de servir como herramienta de apoyo y consulta pública para estudiantes de educación secundaria, bachillerato y grados universitarios que buscan optimizar su acceso a la educación superior y gestionar sus recursos académicos de forma eficiente.
+                </p>
+                <h3 class="font-bold text-blue-900 text-base pt-2">Canal de Contacto y Soporte</h3>
+                <p>
+                    Si tienes dudas sobre el funcionamiento de las calculadoras de notas de corte, encuentras alguna errata en el directorio oficial de los 1.841 grados o deseas ponerte en contacto con el equipo de mantenimiento, puedes escribirnos directamente a través de nuestro correo electrónico oficial de soporte:
+                </p>
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 font-bold text-blue-900 text-center">
+                    📧 Soporte oficial: contacto@estuweb.es
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. VISTA AVISO LEGAL Y POLÍTICA DE PRIVACIDAD (Exigido por Google) -->
+        <section id="tab-legal" class="view-section hidden glass-card rounded-3xl shadow-2xl p-6 sm:p-8 space-y-6">
+            <div class="border-b pb-4">
+                <h2 class="text-2xl font-black text-blue-900 flex items-center gap-2">
+                    <span>⚖️</span> Aviso Legal y Política de Privacidad
+                </h2>
+                <p class="text-sm text-slate-500">Condiciones de uso de la plataforma, propiedad intelectual y tratamiento de datos personales.</p>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-700 leading-relaxed">
+                <h3 class="font-bold text-blue-900 text-base">1. Aviso Legal e Identificación</h3>
+                <p>
+                    En cumplimiento de la normativa vigente en España, se informa que Estuweb es un portal web informativo y de herramientas académicas de acceso libre. El uso de la web implica la aceptación de los presentes términos legales.
+                </p>
+                <h3 class="font-bold text-blue-900 text-base pt-2">2. Política de Privacidad y Cookies</h3>
+                <p>
+                    Estuweb respeta la privacidad de los usuarios. Las herramientas interactivas operan directamente en el navegador del usuario (cliente), sin almacenar datos personales sensibles en bases de datos externas. Este sitio web utiliza servicios de terceros como <strong>Google AdSense</strong> para la emisión de publicidad contextual, los cuales pueden emplear cookies técnicas y de publicidad de acuerdo con sus propias políticas de privacidad.
+                </p>
+                <h3 class="font-bold text-blue-900 text-base pt-2">3. Propiedad Intelectual</h3>
+                <p>
+                    Todos los códigos fuente, diseños, interfaces y recopilaciones de datos estructurales de Estuweb están protegidos por las leyes de propiedad intelectual. Queda prohibida su reproducción total o parcial sin autorización expresa.
+                </p>
+            </div>
+        </section>
+
     </main>
 
-    <!-- PIE DE PÁGINA -->
+    <!-- PIE DE PÁGINA CON ENLACES LEGALES VISIBLES -->
     <footer class="text-center text-white/70 text-xs py-6 space-y-2">
         <p>© 2026 Estuweb. Tu micro-SaaS universitario en España. Todos los derechos reservados.</p>
-        <p><a href="/ads.txt" target="_blank" class="underline hover:text-white">Verificar ads.txt de AdSense</a></p>
+        <div class="flex justify-center gap-4 pt-1">
+            <button onclick="switchTab('quienes')" class="underline hover:text-white">Quiénes Somos</button>
+            <span>•</span>
+            <button onclick="switchTab('quienes')" class="underline hover:text-white">Contacto</button>
+            <span>•</span>
+            <button onclick="switchTab('legal')" class="underline hover:text-white">Aviso Legal</button>
+            <span>•</span>
+            <button onclick="switchTab('legal')" class="underline hover:text-white">Privacidad</button>
+            <span>•</span>
+            <a href="/ads.txt" target="_blank" class="underline hover:text-white">Verificar ads.txt</a>
+        </div>
     </footer>
 
     <!-- SCRIPTS Y LÓGICA DE LA APLICACIÓN -->
